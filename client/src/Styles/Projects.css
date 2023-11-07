@@ -1,0 +1,24 @@
+
+.project_card{
+    max-width: 500px;
+    max-height: 800px;
+    min-height: max-content;
+    margin-left: 27%;
+    text-align: left;
+    padding: 10px;
+    border-radius: 10px;
+    
+}
+
+.top_bar{
+  margin-left: 3%;
+  margin-top: 3%;
+  display: flex;
+  
+}
+.name_space{
+    display: flex;
+    flex-direction: column;
+    margin-top: -5px;
+    line-height: 0px;
+}
