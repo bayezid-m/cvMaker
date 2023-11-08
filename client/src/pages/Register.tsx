@@ -70,6 +70,9 @@ export default function Register() {
       else if (email.includes('@') === false || email.includes('.') === false) {
         setErrorMessage('Email format is wrong');
       }
+      else if (password.length<8 && rePassword.length<8) {
+        setErrorMessage('Password must be 8 charecters or long');
+      }
       else if (password !== rePassword) {
         setErrorMessage('Password did not match');
       }

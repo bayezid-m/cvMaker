@@ -55,7 +55,7 @@ export const createSingleUser = createAsyncThunk(
     'createAUser',
     async ({ userData }: { userData: NewUser }) => {
         try {
-            const result = await axios.post<NewUser>("http://localhost:2000/api/register", userData);
+            const result = await axios.post<NewUser>("http://localhost:2000/api/v1/user/register", userData);
             return result.data; // The returned result will be inside action.payload
         } catch (e) {
             const error = e as AxiosError;
@@ -68,7 +68,7 @@ export const login = createAsyncThunk(
     "login",
     async ({ email, password }: UserCredential, { dispatch }) => {
         try {
-            const result = await axios.post<{ token: string }>("http://localhost:2000/api/login", { email, password })
+            const result = await axios.post<{ token: string }>("http://localhost:2000/api/v1/user/login", { email, password })
             const accessToken = result.data.token
             console.log("I am here");
             localStorage.setItem("token", accessToken)
@@ -85,7 +85,7 @@ export const authenticate = createAsyncThunk(
     "authenticate",
     async () => {
         try {
-            const authentication = await axios.get<{userData: User}>("http://localhost:2000/api/user",
+            const authentication = await axios.get<{userData: User}>("http://localhost:2000/api/v1/user",
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
@@ -105,7 +105,7 @@ export const updateUser = createAsyncThunk(
     async ({ userData, userId }: { userData: UpdateUser, userId: string }) => {
         try {
             console.log("I am here");
-            const result = await axios.put<User>(`http://localhost:2000/api/user/${userId}`, userData);
+            const result = await axios.put<User>(`http://localhost:2000/api/v1/user/${userId}`, userData);
             return result.data; // The returned result will be inside action.payload
           
         } catch (e) {
