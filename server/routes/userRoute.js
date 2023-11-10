@@ -7,7 +7,7 @@ const {
     handleUpdateProfile
 } = require('../controllers/useController')
 
-const router = express.Router();
+const router = express.Router()
 
 router.use(express.json())
 

@@ -5,6 +5,7 @@ import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelecter'
 import { Button } from '@mui/material';
 import { updateUser } from '../redux/reducers/UserReducer';
+import { getAllEducation } from '../redux/reducers/EducationReducer'
 import "../Styles/Profile.css"
 
 
@@ -19,17 +20,23 @@ const Profile = () => {
   const [rePassword, setRePassword] = useState('');
   const [status, setStatus] = useState('');
   const [occupation, setOccupation] = useState('');
+  const [skills, setSkills] = useState([''])
   const [imageSender, setImageSender] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const { user, users } = useAppSelector(state => state.userReducer);
+  const { educations, education } = useAppSelector(state => state.educationReducer)
   const [doEdit, setDoEdit] = useState(false)
+  const [allEdu, setAllEdu] = useState([])
+  const [currentInstitute, setCurrentInstitute] = useState('')
 
   const logout = () => {
     localStorage.setItem("token", "")
     navigate('/')
   }
+
   useEffect(() => {
     initialValue()
+    dispatch(getAllEducation())
   }, [doEdit])
 
   const initialValue = () => {
@@ -40,9 +47,13 @@ const Profile = () => {
     setOccupation(user?.occupation)
     setPassword(user?.password)
     setRePassword(user?.password)
+    setSkills(user?.skills)
     setImageSender(user?.image)
-  }
 
+  }
+  const runningObject = educations.find(obj => obj.ending === "running");
+
+  console.log(runningObject);
   const handleSubmit = () => {
     if (firstName === '' || email === '' || password === '' || rePassword === '') {
       setErrorMessage("Please fill all input")
@@ -51,27 +62,65 @@ const Profile = () => {
       setErrorMessage("Please match both password field")
     }
     else {
-      dispatch(updateUser({ userData: { id: user?._id, first_name: firstName, last_name: lastName, email: email, status: status, occupation: occupation }, userId: user?._id as string }));
+      dispatch(updateUser({ userData: { id: user?._id, first_name: firstName, last_name: lastName, email: email, status: status, occupation: occupation, skills: skills }, userId: user?._id as string }));
       setDoEdit(false);
     }
   }
 
   const imageUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + user?.image + ".jpg"
-
+  //   {task.info.tags.map((tag, index) => (
+  //     <li key={index}>{tag}</li>
+  // ))}
   return (
     <div className='profile'>
-      <h1 style={{ textAlign: 'center' }}>Your Profile</h1>
+      <h1 style={{ textAlign: 'center' }}>My Profile</h1>
       {!doEdit ?
-        <div>
-          <h1>{user?.first_name} {user?.last_name}</h1>
-          <h3>{user?.email}</h3>
-          <h3>{user?.status}</h3>
-          <h3>{user?.occupation}</h3>
-          <img src={imageUrl} className="poster" alt=" "></img>
-          <div>
-            <button onClick={e => setDoEdit(true)}>Update profile</button>
+        <div className='mainContainer'>
+          <div className='container'>
+            <div className='imageContainer'>
+              <img src={imageUrl} className="poster" alt=" "></img>
+            </div>
+            <h1 style={{ textAlign: "center" }}>{user?.first_name} {user?.last_name}</h1>
+            <h4>{runningObject?.institution}</h4>
+            <p>Degree: {runningObject?.degree}</p>
+            <p>GPA: {runningObject?.gpa}</p>
+            <p>Status: {user?.status}</p>
+            <p>Occupation: {user?.occupation}</p>
+            <div>
+              <button onClick={e => setDoEdit(true)}>Update profile</button>
+            </div>
+            <Button
+              sx={{ backgroundColor: "primary.contrastText", marginTop: 1,  width: "100px" }} onClick={logout}>Logout</Button>
           </div>
-        </div> :
+          <div>
+            <h2>My CV</h2>
+            <div className='cv'>
+              <h3>Make my CV</h3>
+              <p>You can make your CV from existing profile data or make it from scratch with help of AI</p>
+              <button className='cvButton'>From Profile</button>
+              <button className='cvButton'>Make with AI</button>
+            </div>
+            <h2>Skills</h2>
+            <div className='skills'>
+              {user.skills.map((skill) => (
+                <div className='subskills'>{skill}</div>
+              ))}
+            </div>
+            <h2>Education</h2>
+            <div className='education'>
+              {educations?.map((edu) => (
+                <ul>
+                  <li><h4>{edu.institution}</h4></li>
+                  <li>Degree: {edu.degree}</li>
+                  <li>Gpa: {edu.gpa}</li>
+                  <li>Starting: {edu.starting} Graduate: {edu.ending}</li>
+                </ul>
+              ))}
+
+            </div>
+          </div>
+        </div>
+        :
         <div className='updateP'>
           <form >
             <div>
@@ -102,8 +151,7 @@ const Profile = () => {
           </form>
         </div>
       }
-      <Button variant="contained"
-        sx={{ backgroundColor: 'primary.contrastText', color: 'white', margin: 1 }} onClick={logout}>Logout</Button>
+
     </div>
   )
 }

@@ -4,5 +4,6 @@ export interface UpdateUser {
     last_name: string
     email: string
     status: string
-    occupation: string
+    occupation: string,
+    skills: string[]
 }

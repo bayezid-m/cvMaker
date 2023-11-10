@@ -1,4 +1,84 @@
-.poster{
-    max-width: 350px;
-    max-height: 300px;
+.mainContainer {
+    display: flex;
+    gap: 30px
+}
+
+.imageContainer {
+    text-align: center;
+}
+
+.poster {
+    max-width: 150px;
+    max-height: 100px;
+    text-align: center;
+    margin-top: 5%;
+    border-radius: 10px;
+}
+
+.container {
+    margin-left: 5%;
+    background-color: rgb(205, 221, 255);
+    min-width: 350px;
+    max-width: 400px;
+    min-height: max-content;
+    max-height: 500px;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+.cv {
+    background-color: rgb(205, 221, 255);
+    min-width: 900px;
+    max-width: max-content;
+    height: max-content;
+    padding-top: 1px;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.cvButton{
+    background-color: rgb(29, 29, 241);
+    border: none;
+    height: 40px;
+    width: 100px;
+    border-radius: 5px;
+    margin: 5px;
+    color: white; 
+    transition: background-color 0.3s; 
+    &:hover {
+      background-color: rgb(55, 55, 162);
+    }
+}
+.skills{
+    background-color: rgb(205, 221, 255);
+    height: max-content;
+    min-width: 900px;
+    max-width: max-content;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+}
+.subskills{
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    background-color: rgb(82, 142, 210);
+    border-radius: 10px;
+    padding: 20px;
+}
+.education {
+    background-color: rgb(205, 221, 255);
+    min-width: 900px;
+    max-width: max-content;
+    height: max-content;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+ul {
+    list-style-type: none;
+    background-color: rgb(82, 142, 210);
+    margin: 10px;
+    border-radius: 10px;
 }

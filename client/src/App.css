@@ -6,7 +6,9 @@ body{
   margin-top: 63px; 
   text-decoration: none;
 }
-
+a{
+  text-decoration: none;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

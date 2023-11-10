@@ -6,6 +6,6 @@ export interface User {
     password: string
     status: string
     occupation: string
-    cv: string
     image: string
+    skills: string[]
 }

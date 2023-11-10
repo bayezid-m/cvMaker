@@ -85,16 +85,16 @@ export default function NavBar({ check, change }: { check: any; change: any }) {
                     </Typography>
                     {token ?
                         <div style={{ display: 'flex', gap: 10 }}>
-                            <Link to='/profile'><p style={{ color: "primary.contrastText"}}>{user?.first_name}</p></Link>
-                            <Button 
-                                sx={{ backgroundColor: "primary.contrastText", color: 'white', margin: 1 }} onClick={logout}>Logout</Button>
+                            <Link to='/profile'><p style={{ color: "primary.contrastText" }}>{user?.first_name}</p></Link>
+                            <Button
+                                sx={{ backgroundColor: "primary.contrastText", margin: 1 }} onClick={logout}>Logout</Button>
                         </div>
                         :
                         <div style={{ display: 'flex', gap: 10 }}>
-                            <Link to="/login"><Typography  sx={{ flexGrow: 1, color: "primary.contrastText", fontFamily: 'Nico Moji', textDecoration: 'none'}}>
+                            <Link to="/login"><Typography sx={{ flexGrow: 1, color: "primary.contrastText", fontFamily: 'Nico Moji', textDecoration: 'none' }}>
                                 Login
                             </Typography></Link>
-                            <Link to="/register"><Typography  sx={{ flexGrow: 1, color: "primary.contrastText", fontFamily: 'Nico Moji', textDecoration: 'none'}}>
+                            <Link to="/register"><Typography sx={{ flexGrow: 1, color: "primary.contrastText", fontFamily: 'Nico Moji', textDecoration: 'none' }}>
                                 Register
                             </Typography></Link>
                         </div>

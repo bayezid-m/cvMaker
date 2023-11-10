@@ -22,8 +22,8 @@ const initialState: {
         password: '',
         status: '',
         occupation: '',
-        cv: '',
-        image: ''
+        image: '',
+        skills: ['']
     },
     users: [],
     checkemail: false,
@@ -38,7 +38,8 @@ const initialState: {
         password: '',
         status: '',
         occupation: '',
-        imageSender: ''
+        imageSender: '',
+        skills: ['']
     },
     updateUser:
     {
@@ -48,6 +49,7 @@ const initialState: {
         email: '',
         status: '',
         occupation: '',
+        skills: ['']
     }
 }
 

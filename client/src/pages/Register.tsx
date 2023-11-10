@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import useAppSelector from '../hooks/useAppSelecter';
 import useAppDispatch from '../hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { createSingleUser } from '../redux/reducers/UserReducer';
 import { User } from '../types/User';
 import axios from 'axios';
@@ -29,10 +30,12 @@ export default function Register() {
   const [status, setStatus] = useState('');
   const [occupation, setOccupation] = useState('');
   const [imageSender, setImageSender] = useState('');
+  const [skills, setSkills] = useState([])
   const [errorMessage, setErrorMessage] = useState('');
   const { user, users } = useAppSelector(state => state.userReducer);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const defaultTheme = createTheme();
 
   useEffect(() => {
   }, []);
@@ -77,7 +80,7 @@ export default function Register() {
         setErrorMessage('Password did not match');
       }
       else {
-        dispatch(createSingleUser({ userData: { firstName: firstName, lastName: lastName, email: email, password: password, status: status, occupation: occupation, imageSender: imageSender } }));
+        dispatch(createSingleUser({ userData: { firstName: firstName, lastName: lastName, email: email, password: password, status: status, occupation: occupation, imageSender: imageSender , skills: skills} }));
         navigate('/');
       }
     }
@@ -86,6 +89,7 @@ export default function Register() {
     }
   };
   return (
+    <ThemeProvider theme={defaultTheme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <Box
@@ -196,10 +200,10 @@ export default function Register() {
           </Grid>
           <p style={{ color: 'red' }}>{errorMessage}</p>
           <Button
-            type="submit"
-            fullWidth
-           
-            sx={{ mt: 3, mb: 2 , backgroundColor: "primary.contrastText",}}
+             type="submit"
+             fullWidth
+             variant="contained"
+             sx={{ mt: 3, mb: 2  }}
           >
             Sign Up
           </Button>
@@ -212,5 +216,6 @@ export default function Register() {
       </Box>
 
     </Container>
+    </ThemeProvider>
   );
 }

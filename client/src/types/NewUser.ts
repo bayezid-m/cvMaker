@@ -6,5 +6,6 @@ export interface NewUser {
     password: string
     status: string
     occupation: string
-    imageSender: string
+    imageSender: string,
+    skills?: string[]
 }

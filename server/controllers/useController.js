@@ -18,6 +18,7 @@ const handleRegister = async (req, res) => {
             status: req.body.status,
             occupation: req.body.occupation,
             image: req.body.imageSender,
+            skills: req.body.skills
         })
         res.json({ status: 'ok' })
     } catch (error) {
@@ -67,8 +68,6 @@ const handleGetProfile = async(req, res)=>{
 }
 
 const handleUpdateProfile = async(req, res)=>{
-     //console.log(req.body.id);
-    //const newPassword = await bcrypt.hash(req.body.password, 10)
     try {
         await User.updateOne({ _id: req.body.id }, {
             first_name: req.body.firstName,
@@ -77,6 +76,7 @@ const handleUpdateProfile = async(req, res)=>{
             status: req.body.status,
             occupation: req.body.occupation,
             image: req.body.imageSender,
+            skills: req.body.skills
         }).then(() => {
             return res.json({ status: 'ok' })
         })

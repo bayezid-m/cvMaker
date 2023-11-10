@@ -9,9 +9,10 @@ const User = new mongoose.Schema(
 		status: { type: String },
         occupation: {type: String},
         image: {type: String},	
-		skill: [{
-
-		}]
+		skills: {
+			type: [String], 
+			default: [],   
+		  },
 	},
 	{ collection: 'socailusers' }
 )
