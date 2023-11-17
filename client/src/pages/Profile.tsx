@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 
 import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelecter'
@@ -7,11 +9,13 @@ import { Button } from '@mui/material';
 import { updateUser } from '../redux/reducers/UserReducer';
 import { getAllEducation } from '../redux/reducers/EducationReducer'
 import "../Styles/Profile.css"
-
+import Skills from '../components/Skills';
+import Educations from '../components/Educations';
 
 const Profile = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate();
+  const defaultTheme = createTheme();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [id, setId] = useState('');
@@ -26,8 +30,6 @@ const Profile = () => {
   const { user, users } = useAppSelector(state => state.userReducer);
   const { educations, education } = useAppSelector(state => state.educationReducer)
   const [doEdit, setDoEdit] = useState(false)
-  const [allEdu, setAllEdu] = useState([])
-  const [currentInstitute, setCurrentInstitute] = useState('')
 
   const logout = () => {
     localStorage.setItem("token", "")
@@ -36,8 +38,8 @@ const Profile = () => {
 
   useEffect(() => {
     initialValue()
-    dispatch(getAllEducation())
-  }, [doEdit])
+   // dispatch(getAllEducation())
+  }, [])
 
   const initialValue = () => {
     setFirstName(user?.first_name)
@@ -51,9 +53,10 @@ const Profile = () => {
     setImageSender(user?.image)
 
   }
+ // console.log(user.skills);
   const runningObject = educations.find(obj => obj.ending === "running");
 
-  console.log(runningObject);
+ 
   const handleSubmit = () => {
     if (firstName === '' || email === '' || password === '' || rePassword === '') {
       setErrorMessage("Please fill all input")
@@ -62,15 +65,13 @@ const Profile = () => {
       setErrorMessage("Please match both password field")
     }
     else {
-      dispatch(updateUser({ userData: { id: user?._id, first_name: firstName, last_name: lastName, email: email, status: status, occupation: occupation, skills: skills }, userId: user?._id as string }));
+      dispatch(updateUser({ userData: { id: user?._id, first_name: firstName, last_name: lastName, email: email, status: status, occupation: occupation }, userId: user?._id as string }));
       setDoEdit(false);
     }
   }
 
   const imageUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + user?.image + ".jpg"
-  //   {task.info.tags.map((tag, index) => (
-  //     <li key={index}>{tag}</li>
-  // ))}
+
   return (
     <div className='profile'>
       <h1 style={{ textAlign: 'center' }}>My Profile</h1>
@@ -90,7 +91,7 @@ const Profile = () => {
               <button onClick={e => setDoEdit(true)}>Update profile</button>
             </div>
             <Button
-              sx={{ backgroundColor: "primary.contrastText", marginTop: 1,  width: "100px" }} onClick={logout}>Logout</Button>
+              sx={{ backgroundColor: "primary.contrastText", marginTop: 1, width: "100px" }} onClick={logout}>Logout</Button>
           </div>
           <div>
             <h2>My CV</h2>
@@ -100,24 +101,8 @@ const Profile = () => {
               <button className='cvButton'>From Profile</button>
               <button className='cvButton'>Make with AI</button>
             </div>
-            <h2>Skills</h2>
-            <div className='skills'>
-              {user.skills.map((skill) => (
-                <div className='subskills'>{skill}</div>
-              ))}
-            </div>
-            <h2>Education</h2>
-            <div className='education'>
-              {educations?.map((edu) => (
-                <ul>
-                  <li><h4>{edu.institution}</h4></li>
-                  <li>Degree: {edu.degree}</li>
-                  <li>Gpa: {edu.gpa}</li>
-                  <li>Starting: {edu.starting} Graduate: {edu.ending}</li>
-                </ul>
-              ))}
-
-            </div>
+            <Skills data={user.skills}/>
+            <Educations/>
           </div>
         </div>
         :

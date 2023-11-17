@@ -70,8 +70,8 @@ const handleGetProfile = async(req, res)=>{
 const handleUpdateProfile = async(req, res)=>{
     try {
         await User.updateOne({ _id: req.body.id }, {
-            first_name: req.body.firstName,
-            last_name: req.body.lastName,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
             email: req.body.email,
             status: req.body.status,
             occupation: req.body.occupation,
