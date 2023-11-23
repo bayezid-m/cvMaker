@@ -11,11 +11,12 @@ import { AxiosError } from 'axios';
 import { UpdateUser } from '../types/UpdateUser';
 import { User } from '../types/User';
 
-interface MyComponentProps {
-    data: string[];
-  }
+// interface MyComponentProps {
+//     data: string[];
+//   }
+//const Skills : React.FC<MyComponentProps> = (props) => {
 
-const Skills : React.FC<MyComponentProps> = (props) => {
+const Skills = () => {
     const dispatch = useAppDispatch()
     const [skills, setSkills] = useState([''])
     const [doEdit, setDoEdit] = useState(false)
@@ -24,10 +25,10 @@ const Skills : React.FC<MyComponentProps> = (props) => {
     const { user, users } = useAppSelector(state => state.userReducer);
 
     useEffect(() => {
-        setSkills(props.data)
-    }, [])
+        setSkills(user?.skills)
+    }, [doEdit])
 
-    console.log(skills);
+    //console.log(skills);
     const openInput = () => {
         setDoEdit(!doEdit)
     }
@@ -44,6 +45,7 @@ const Skills : React.FC<MyComponentProps> = (props) => {
     const handleChange = () => {
         dispatch(updateUser({ userData: { id: user?._id, skills: skills }, userId: user?._id as string }));
         setDoEdit(false);
+        window.location.reload()
     }
 
     return (
@@ -63,9 +65,8 @@ const Skills : React.FC<MyComponentProps> = (props) => {
                     </div>
                 </div> : <div>
                     <h2>Skills<button className='skilledit' onClick={openInput}><EditIcon /></button></h2>
-
                     <div className='skills'>
-                        {skills.map((skill) => (
+                        {user.skills.map((skill) => (
                             <div className='subskills'>{skill}</div>
                         ))}
                     </div>
@@ -77,6 +78,3 @@ const Skills : React.FC<MyComponentProps> = (props) => {
 
 export default Skills
 
-function dispatch(arg0: AsyncThunkAction<User | AxiosError<unknown, any>, { userData: UpdateUser; userId: string; }, { state?: unknown; dispatch?: Dispatch<AnyAction> | undefined; extra?: unknown; rejectValue?: unknown; serializedErrorType?: unknown; pendingMeta?: unknown; fulfilledMeta?: unknown; rejectedMeta?: unknown; }>) {
-    throw new Error('Function not implemented.');
-}

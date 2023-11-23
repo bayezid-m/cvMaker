@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelecter'
 import { Button } from '@mui/material';
-import { updateUser } from '../redux/reducers/UserReducer';
+import { authenticate, updateUser } from '../redux/reducers/UserReducer';
 import { getAllEducation } from '../redux/reducers/EducationReducer'
 import "../Styles/Profile.css"
 import Skills from '../components/Skills';
@@ -37,9 +38,11 @@ const Profile = () => {
   }
 
   useEffect(() => {
+    dispatch(authenticate())
     initialValue()
-   // dispatch(getAllEducation())
-  }, [])
+   
+    dispatch(getAllEducation())
+  }, [doEdit])
 
   const initialValue = () => {
     setFirstName(user?.first_name)
@@ -51,9 +54,10 @@ const Profile = () => {
     setRePassword(user?.password)
     setSkills(user?.skills)
     setImageSender(user?.image)
-
+    console.log('here');
+    console.log(user.last_name);
   }
- // console.log(user.skills);
+  console.log(firstName);
   const runningObject = educations.find(obj => obj.ending === "running");
 
  
@@ -101,7 +105,7 @@ const Profile = () => {
               <button className='cvButton'>From Profile</button>
               <button className='cvButton'>Make with AI</button>
             </div>
-            <Skills data={user.skills}/>
+            <Skills/>
             <Educations/>
           </div>
         </div>

@@ -5,15 +5,15 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { UpdateEducation } from "../../types/UpdateEducation";
 import { NewEducation } from "../../types/NewEducation";
 
-const initialState:{
+const initialState: {
     education: Education,
     educations: Education[],
     newEducation: NewEducation,
     updateEducation: UpdateEducation,
     error: string,
     loading: boolean
-}={
-    education:{
+} = {
+    education: {
         _id: '',
         institution: '',
         email: '',
@@ -25,7 +25,7 @@ const initialState:{
     educations: [],
     loading: false,
     error: "",
-    newEducation:{
+    newEducation: {
         institution: '',
         email: '',
         degree: '',
@@ -33,7 +33,7 @@ const initialState:{
         starting: '',
         ending: ''
     },
-    updateEducation:{
+    updateEducation: {
         institution: '',
         email: '',
         degree: '',
@@ -48,7 +48,7 @@ export const addEducation = createAsyncThunk(
     async ({ userData: eduData }: { userData: NewEducation }) => {
         try {
             const result = await axios.post<NewEducation>("http://localhost:2000/api/v1/user/education/add", eduData);
-            return result.data; 
+            return result.data;
         } catch (e) {
             const error = e as AxiosError;
             return error;
@@ -59,14 +59,14 @@ export const getAllEducation = createAsyncThunk(
     'getAllEducation',
     async () => {
         try {
-            const authentication = await axios.get<{userData:Education[]}>("http://localhost:2000/api/v1/user/education/all",
+            const authentication = await axios.get<{ userData: Education[] }>("http://localhost:2000/api/v1/user/education/all",
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
                     }
                 }
             )
-            return authentication.data.userData      
+            return authentication.data.userData
         }
         catch (e) {
             const error = e as AxiosError
@@ -76,12 +76,11 @@ export const getAllEducation = createAsyncThunk(
 )
 export const getSingleEduById = createAsyncThunk(
     'getSingleEduById',
-    async ( eduId: string ) => {
+    async (eduId: string) => {
+        console.log(eduId);
         try {
-            console.log("I am here");
-            const result = await axios.put<Education>(`http://localhost:2000/api/v1/user/education/${eduId}`);
-            return result.data; // The returned result will be inside action.payload
-          
+            const result = await axios.get<{ userData: Education }>(`http://localhost:2000/api/v1/user/education/${eduId}`);
+            return result.data.userData; // The returned result will be inside action.payload
         } catch (e) {
             const error = e as AxiosError;
             return error;
@@ -92,8 +91,8 @@ export const updateSingleEdu = createAsyncThunk(
     'updateSingleEdu',
     async ({ eduData, eduId }: { eduData: UpdateEducation, eduId: string }) => {
         try {
-            const result = await axios.put<NewEducation>(`http://localhost:2000/api/v1/user/education/update/${eduId}`, eduData);
-            return result.data; 
+            const result = await axios.put<UpdateEducation>(`http://localhost:2000/api/v1/user/education/update/${eduId}`, eduData);
+            return result.data;
         } catch (e) {
             const error = e as AxiosError;
             return error;
@@ -102,24 +101,25 @@ export const updateSingleEdu = createAsyncThunk(
 )
 export const deleteEducationById = createAsyncThunk(
     'deleteEducationById',
-    async (userId: string) => {
-      try {
-        console.log("Deleting user with ID: ", userId);
-        const result = await axios.delete(`http://localhost:2000/api/v1/user/education/${userId}`);
-        return result.data; // The returned result will be inside action.payload
-      } catch (e) {
-        const error = e as AxiosError;
-        return error;
-      }
+    async (eduId: string) => {
+        try {
+
+            console.log("Deleting user with ID: ", eduId);
+            const result = await axios.delete(`http://localhost:2000/api/v1/user/education/${eduId}`);
+            return result.data; // The returned result will be inside action.payload
+        } catch (e) {
+            const error = e as AxiosError;
+            return error;
+        }
     }
-  );
+);
 const eduSlice = createSlice({
     name: "education",
     initialState,
     reducers: {},
-    extraReducers: (build)=>{
+    extraReducers: (build) => {
         build
-            .addCase(addEducation.fulfilled, (state, action)=>{
+            .addCase(addEducation.fulfilled, (state, action) => {
                 if (action.payload instanceof AxiosError) {
                     state.error = action.payload.message
                 } else {
@@ -127,7 +127,7 @@ const eduSlice = createSlice({
                 }
                 state.loading = false
             })
-            .addCase(getAllEducation.fulfilled, (state,action)=>{
+            .addCase(getAllEducation.fulfilled, (state, action) => {
                 if (action.payload instanceof AxiosError) {
                     state.error = action.payload.message
                 } else {
@@ -135,7 +135,7 @@ const eduSlice = createSlice({
                 }
                 state.loading = false
             })
-            .addCase(getSingleEduById.fulfilled, (state,action)=>{
+            .addCase(getSingleEduById.fulfilled, (state, action) => {
                 if (action.payload instanceof AxiosError) {
                     state.error = action.payload.message
                 } else {
