@@ -12,6 +12,7 @@ import { getAllEducation } from '../redux/reducers/EducationReducer'
 import "../Styles/Profile.css"
 import Skills from '../components/Skills';
 import Educations from '../components/Educations';
+import ProfileProject from '../components/ProfileProject';
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -41,7 +42,7 @@ const Profile = () => {
     dispatch(authenticate())
     initialValue()
    
-    dispatch(getAllEducation())
+   // dispatch(getAllEducation())
   }, [doEdit])
 
   const initialValue = () => {
@@ -54,8 +55,6 @@ const Profile = () => {
     setRePassword(user?.password)
     setSkills(user?.skills)
     setImageSender(user?.image)
-    console.log('here');
-    console.log(user.last_name);
   }
   console.log(firstName);
   const runningObject = educations.find(obj => obj.ending === "running");
@@ -107,6 +106,7 @@ const Profile = () => {
             </div>
             <Skills/>
             <Educations/>
+            <ProfileProject data={user.email} />
           </div>
         </div>
         :

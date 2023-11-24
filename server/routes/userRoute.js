@@ -4,7 +4,8 @@ const {
     handleRegister,
     handleLogin,
     handleGetProfile,
-    handleUpdateProfile
+    handleUpdateProfile,
+    handleGetProfileByEmail
 } = require('../controllers/useController')
 
 const router = express.Router()
@@ -19,6 +20,8 @@ router.post('/login', handleLogin);
 
 //Authenticate user profle
 router.get('/', handleGetProfile);
+//get a user profile by email
+router.post('/email', handleGetProfileByEmail);
 
 //updating user
 router.put('/(:id)', handleUpdateProfile);

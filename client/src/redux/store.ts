@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import userReducer from "./reducers/UserReducer";
 import educationReducer from "./reducers/EducationReducer";
+import projectReducer from "./reducers/ProjectReducer";
 
 const store = configureStore({
     reducer: {
        
         userReducer,
         educationReducer,
+        projectReducer
     },
     preloadedState: {
        

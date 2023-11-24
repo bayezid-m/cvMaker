@@ -5,7 +5,7 @@ import Modal from 'react-modal';
 
 import useAppSelector from '../hooks/useAppSelecter'
 import useAppDispatch from '../hooks/useAppDispatch'
-import { addEducation, deleteEducationById, getAllEducation, getSingleEduById } from '../redux/reducers/EducationReducer'
+import { addEducation, deleteEducationById, getAllEducation, getSingleEduById, updateSingleEdu } from '../redux/reducers/EducationReducer'
 import { Education } from "../types/Education";
 
 interface FormData {
@@ -21,16 +21,35 @@ interface MyModalProps {
   content: string;
 }
 
-const MyModal: React.FC<MyModalProps> = ({ isOpen, closeModal, content }) =>  {
+const MyModal: React.FC<MyModalProps> = ({ isOpen, closeModal, content }) => {
   console.log(content);
   const dispatch = useAppDispatch()
+  const[eduId, setEduId] = useState('')
   const [newInstitute, setNewInstitute] = useState('')
+  const [newDegree, setNewDegree] = useState('')
+  const [newGpa, setNewGpa] = useState<number>(0)
+  const [newStarting, setNewStarting] = useState('')
+  const [newEnding, setNewEnding] = useState('')
   const { educations, education } = useAppSelector(state => state.educationReducer)
 
   useEffect(() => {
-   setNewInstitute(education.institution)
+    setEduId(education._id as string)
+    setNewInstitute(education.institution)
+    setNewDegree(education.degree)
+    setNewGpa(education.gpa)
+    setNewStarting(education.starting)
+    setNewEnding(education.ending)
   }, [education])
   console.log(education);
+
+  const handleUpdate =()=>{
+    dispatch(updateSingleEdu({eduData:{id: eduId, institution: newInstitute, email: education.email, degree: newDegree, gpa: newGpa, starting: newStarting, ending: newEnding}, eduId: content as string }))
+    closeModal();
+    window.location.reload()
+    // dispatch(updateUser({ userData: { id: user?._id, first_name: firstName, last_name: lastName, email: email, status: status, occupation: occupation }, userId: user?._id as string }));
+
+  }
+
   return (
     <Modal
       isOpen={isOpen}
@@ -38,9 +57,16 @@ const MyModal: React.FC<MyModalProps> = ({ isOpen, closeModal, content }) =>  {
       contentLabel="Example Modal"
     >
       <div>
-        <h2>Modal Content</h2>
-        <input type='text' value={newInstitute} onChange={e=>setNewInstitute(e.target.value)}></input>
+        <h2>Update this education</h2>
+        <div>
+          <input type='text' value={newInstitute} onChange={e => setNewInstitute(e.target.value)}></input>
+          <input type='text' value={newDegree} onChange={e => setNewDegree(e.target.value)}></input>
+          <input type="number" value={newGpa} onChange={e => setNewGpa(Number(e.target.value))}></input>
+          <input type='text' value={newStarting} onChange={e => setNewStarting(e.target.value)}></input>
+          <input type='text' value={newEnding} onChange={e => setNewEnding(e.target.value)}></input>
+        </div>
         <p>{content}</p>
+        <button onClick={handleUpdate}>Update</button>
         <button onClick={closeModal}>Close Modal</button>
       </div>
     </Modal>
@@ -57,10 +83,7 @@ const Educations = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
 
-  useEffect(() => {
-    dispatch(getAllEducation())
-    setHereEducations(educations)
-  }, [doEdit])
+
   //console.log(educations);
 
   const [formData, setFormData] = useState({
@@ -72,14 +95,16 @@ const Educations = () => {
     ending: '',
   });
 
-
+  useEffect(() => {
+    dispatch(getAllEducation())
+    setHereEducations(educations)
+  }, [doEdit, formData])
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
       ...prevData,
       [name]: value,
     }));
-
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -89,7 +114,6 @@ const Educations = () => {
     }
     const newEducations: Education[] = [...hereEducations, formData]
     setHereEducations(newEducations)
-    console.log(hereEducations);
     dispatch(addEducation({
       userData: {
         institution: formData.institution,
@@ -100,7 +124,8 @@ const Educations = () => {
         ending: formData.ending
       }
     }))
-    //setDoEdit(false)
+    dispatch(getAllEducation())
+    setDoEdit(false)
   };
 
   const openInput = () => {
@@ -116,14 +141,14 @@ const Educations = () => {
     setModalIsOpen(false);
   };
 
-  const handleDelete =(id: string)=>{
+  const handleDelete = (id: string) => {
     dispatch(deleteEducationById(id))
-    setDoEdit(!doEdit)
+    //setDoEdit(!doEdit)
     window.location.reload()
   }
   return (
     <div>
-      <MyModal  isOpen={modalIsOpen} closeModal={closeModal} content={modalContent} />
+      <MyModal isOpen={modalIsOpen} closeModal={closeModal} content={modalContent} />
       {doEdit ? <div>
         <h2>Education<button className='skilledit' onClick={openInput}><EditIcon /></button></h2>
         <form onSubmit={handleSubmit}>

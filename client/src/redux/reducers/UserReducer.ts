@@ -7,6 +7,7 @@ import { UpdateUser } from "../../types/UpdateUser";
 
 const initialState: {
     user: User,
+    emailUser: User,
     newUser: NewUser,
     updateUser: UpdateUser,
     users: User[],
@@ -15,6 +16,17 @@ const initialState: {
     error: string
 } = {
     user: {
+        _id: '',
+        first_name: '',
+        last_name: '',
+        email: '',
+        password: '',
+        status: '',
+        occupation: '',
+        image: '',
+        skills: ['']
+    },
+    emailUser:{
         _id: '',
         first_name: '',
         last_name: '',
@@ -102,6 +114,25 @@ export const authenticate = createAsyncThunk(
         }
     }
 )
+export const getUserByEmail = createAsyncThunk(
+    "getUerByEmail",
+    async ( email: {email: string}) => {
+        console.log(email);
+        try {
+            const userByEmail = await axios.post<{ userData: User }>(
+                "http://localhost:2000/api/v1/user/email",
+                email
+              );
+              console.log(userByEmail.data);
+              return userByEmail.data.userData;
+                  
+        }
+        catch (e) {
+            const error = e as AxiosError
+            return error
+        }
+    }
+)
 export const updateUser = createAsyncThunk(
     'updateUser',
     async ({ userData, userId }: { userData: UpdateUser, userId: string }) => {
@@ -136,6 +167,14 @@ const usersSlice = createSlice({
                     state.error = action.payload.message
                 } else {
                     state.user = action.payload
+                }
+                state.loading = false
+            })
+            .addCase(getUserByEmail.fulfilled, (state, action) => {
+                if (action.payload instanceof AxiosError) {
+                    state.error = action.payload.message
+                } else {
+                    state.emailUser = action.payload
                 }
                 state.loading = false
             })

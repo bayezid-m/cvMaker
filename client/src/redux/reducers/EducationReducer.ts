@@ -34,6 +34,7 @@ const initialState: {
         ending: ''
     },
     updateEducation: {
+        
         institution: '',
         email: '',
         degree: '',

@@ -67,6 +67,17 @@ const handleGetProfile = async(req, res)=>{
     }
 }
 
+const handleGetProfileByEmail = async(req, res)=>{
+    try {
+        const email = req.body.email
+        const user = await User.findOne({ email: email })
+        return res.json({ status: 'ok', userData: user })
+    } catch (error) {
+        console.log(error)
+        res.json({ status: 'error', error: 'invalid token hr' })
+    }
+}
+
 const handleUpdateProfile = async(req, res)=>{
     try {
         await User.updateOne({ _id: req.body.id }, {
@@ -89,5 +100,6 @@ module.exports = {
     handleRegister,
     handleLogin,
     handleGetProfile,
+    handleGetProfileByEmail,
     handleUpdateProfile
 }
