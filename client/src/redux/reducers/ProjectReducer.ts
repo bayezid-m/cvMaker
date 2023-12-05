@@ -16,7 +16,18 @@ const initialState: {
         email: '',
         name: '',
         description: '',
-        image: ''
+        image: '',
+        user: {
+            _id: '',
+            first_name: '',
+            last_name: '',
+            email: '',
+            password: '',
+            status: '',
+            occupation: '',
+            image: '',
+            skills: ['']
+        }
     },
     newPorject: {
         _id: '',

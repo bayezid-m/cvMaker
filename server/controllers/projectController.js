@@ -17,16 +17,31 @@ const handleAddProject = async (req, res) => {
     }
 }
 const handleGetAllProject = async(req, res)=>{
-    try{
+    // try{   
+    //     const projectData = await UserProject.find()
+    //     const user = await User.find({ email: projectData.email })
+    //     return res.json({ status: 'ok',  projectData: projectData , userData: user})
+    // }
+    // catch (error) {
+    //     res.json({ status: 'error', user: false, message: error })
+    // }
+    try {
+        const projectData = await UserProject.find();
         
-        const projectData = await UserProject.find()
-        //const user = await User.findOne({ email: projects.email })
-        return res.json({ status: 'ok',  projectData: projectData })
-    }
-    catch (error) {
-        res.json({ status: 'error', user: false, message: error })
+        // Map over each project and fetch user information for the associated email
+        const projectsWithUserData = await Promise.all(
+            projectData.map(async (project) => {
+                const user = await User.findOne({ email: project.email });
+                return { ...project._doc, user: user }; // Include user info in each project
+            })
+        );
+
+        return res.json({ status: 'ok', projectData: projectsWithUserData });
+    } catch (error) {
+        res.json({ status: 'error', user: false, message: error.message });
     }
 }
+
 const handleGetAllProjectByEmail = async(req, res)=>{
     const Email = req.body.email
     try{ 

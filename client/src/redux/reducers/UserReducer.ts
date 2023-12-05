@@ -135,17 +135,19 @@ export const getUserByEmail = createAsyncThunk(
 )
 export const updateUser = createAsyncThunk(
     'updateUser',
-    async ({ userData, userId }: { userData: UpdateUser, userId: string }) => {
+    async ({ userData, userId }: { userData: UpdateUser, userId: string }, { dispatch }) => {
         try {
             console.log("I am here");
             const result = await axios.put<User>(`http://localhost:2000/api/v1/user/${userId}`, userData);
-            return result.data; // The returned result will be inside action.payload
-          
+            //return result.data; // The returned result will be inside action.payload
+            const authentication = await dispatch(authenticate())
+            return authentication.payload as User
         } catch (e) {
             const error = e as AxiosError;
             return error;
         }
     }
+    
 );
 
 const usersSlice = createSlice({

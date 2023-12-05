@@ -5,7 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 import useAppDispatch from '../hooks/useAppDispatch'
-import { updateUser } from '../redux/reducers/UserReducer';
+import { authenticate, updateUser } from '../redux/reducers/UserReducer';
 import { AsyncThunkAction, Dispatch, AnyAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { UpdateUser } from '../types/UpdateUser';
@@ -25,6 +25,7 @@ const Skills = () => {
     const { user, users } = useAppSelector(state => state.userReducer);
 
     useEffect(() => {
+        //dispatch(authenticate())
         setSkills(user?.skills)
     }, [doEdit])
 
@@ -41,11 +42,13 @@ const Skills = () => {
     const handleAdd = () => {
         const newSkilArray = [...skills, newSkill]
         setSkills(newSkilArray)
+        setNewSkill('')
+        //dispatch(authenticate())
     }
     const handleChange = () => {
         dispatch(updateUser({ userData: { id: user?._id, skills: skills }, userId: user?._id as string }));
         setDoEdit(false);
-        window.location.reload()
+        //window.location.reload()
     }
 
     return (

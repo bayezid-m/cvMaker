@@ -75,7 +75,7 @@ export default function NavBar({ check, change }: { check: any; change: any }) {
         localStorage.setItem("token", "")
         navigate('/')
     }
-    console.log(user);
+    
     return (
         <Box sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100%' }}>
             <AppBar position="static" sx={{ backgroundColor: "primary.main" }}>
