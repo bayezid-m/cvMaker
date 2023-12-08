@@ -1,0 +1,78 @@
+.all{
+ display: flex;
+ flex-direction: row;  
+ margin-top: 50px;
+ margin-left: 100px;
+ gap: 50px;
+}
+.actions{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+.actions button{
+    width: 150px;
+}
+.app {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns */
+    grid-gap: 20px;
+    border: 1px solid black;   
+    min-height: 1080px;
+    margin-bottom: 50px;
+}
+
+.info,
+.skill,
+.projects,
+.experiences,
+.educations {
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.info p {
+    margin: 5px 0;
+}
+
+.subskill {
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.projects ul,
+.experiences ul,
+.educations ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.projects li,
+.experiences li,
+.educations li {
+    margin-bottom: 10px;
+}
+
+.experiences .farm {
+    color: #555;
+}
+
+.educations .institution {
+    font-weight: bold;
+}
+
+.educations .degree {
+    color: #555;
+}
+
+.educations .gpa {
+    color: #555;
+}
+
+/* Add any additional styling as needed */

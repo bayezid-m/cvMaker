@@ -33,8 +33,7 @@ const initialState: {
         starting: '',
         ending: ''
     },
-    updateEducation: {
-        
+    updateEducation: {  
         institution: '',
         email: '',
         degree: '',
@@ -60,14 +59,14 @@ export const getAllEducation = createAsyncThunk(
     'getAllEducation',
     async () => {
         try {
-            const authentication = await axios.get<{ userData: Education[] }>("http://localhost:2000/api/v1/user/education/all",
+            const alledu = await axios.get<{ userData: Education[] }>("http://localhost:2000/api/v1/user/education/all",
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
                     }
                 }
             )
-            return authentication.data.userData
+            return alledu.data.userData
         }
         catch (e) {
             const error = e as AxiosError

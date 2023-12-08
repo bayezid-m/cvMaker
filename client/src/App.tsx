@@ -12,6 +12,7 @@ import Register from './pages/Register';
 import Footer from './components/Footer';
 import Jobs from './pages/Jobs';
 import Events from './pages/Events';
+import CvMaking from './pages/CvMaking'
 
 function App() {
   const [isDark, setIsDark] = useState(false)
@@ -59,6 +60,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
             <Route path='/profile' element={<Profile />} />
+            <Route path='/userCV' element={<CvMaking/>}/> 
           </Routes>
         </BrowserRouter>
       </Paper>

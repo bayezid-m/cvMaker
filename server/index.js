@@ -7,7 +7,7 @@ const {emailValidation} = require("./middleWares/userMw")
 const userRouter = require("./routes/userRoute")
 const educationRouter = require("./routes/educationRouter")
 const projectRouter = require("./routes/projectRouter")
-
+const experienceRouter = require("./routes/experienceRouter")
 
 app.use(cors())
 app.use(express.json())
@@ -18,8 +18,8 @@ app.use("/api/v1/user", userRouter)
 //user education router
 app.use("/api/v1/user/education", educationRouter)
 //user experience roouter
-
-//user project router\
+app.use("/api/v1/user/experience", experienceRouter)
+//user project router
 app.use("/api/v1/project", projectRouter)
 
 app.listen(2000, () => {

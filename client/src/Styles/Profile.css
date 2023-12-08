@@ -76,7 +76,7 @@
     border-radius: 10px;
 }
 
-ul {
+.otherUl {
     list-style-type: none;
     background-color: rgb(82, 142, 210);
     margin: 10px;
@@ -85,4 +85,12 @@ ul {
 .skilledit{
     border: none;
     background: transparent;
+}
+.experience{
+    background-color: rgb(205, 221, 255);
+    min-width: 900px;
+    max-width: max-content;
+    height: max-content;
+    padding: 5px;
+    border-radius: 10px;
 }

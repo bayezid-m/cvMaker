@@ -1,18 +1,14 @@
-const express = require('express')
-const User = require('../model/user')
-const Edu = require('../model/userEduction')
 const jwt = require('jsonwebtoken')
-const bcrypt = require('bcryptjs')
+const userExperience = require('../model/userExperience')
 
-
-const handleAddEducation = async (req, res) => {
+const handleAddExperience = async (req, res) => {
     console.log(req.body);
     try {
-        await Edu.create({
+        await userExperience.create({
             email: req.body.email,
-            institution: req.body.institution,
-            degree: req.body.degree,
-            gpa: req.body.gpa,
+            title: req.body.title,
+            description: req.body.description,
+            farm: req.body.farm,
             starting: req.body.starting,
             ending: req.body.ending
         })
@@ -21,37 +17,40 @@ const handleAddEducation = async (req, res) => {
         res.json({ status: 'error', user: false, message: error })
     }
 }
-const handleGetEducation = async (req, res) => {
+
+const handleGetExperience = async (req, res) => {
     const token = req.headers['x-access-token']
     try {
         const decoded = jwt.verify(token, 'secret123')
         const email = decoded.email
-        const user = await Edu.find({ email: email })
+        const user = await userExperience.find({ email: email })
         return res.json({ status: 'ok', userData: user })
     } catch (error) {
         console.log(error)
         res.json({ status: 'error', error: 'invalid token hr' })
     }
 }
-const handleGetEduById = async (req, res) => {
+
+const handleGetExperienceById = async (req, res) => {
     const id = req.params.id;
     try {
-        const userEdu = await Edu.findById(id)
-        return res.json({ status: 'ok', userData: userEdu })
+        const userExp = await userExperience.findById(id)
+        return res.json({ status: 'ok', userData: userExp })
     } catch (error) {
         console.log(error)
         res.json({ status: 'error', error: 'invalid token hr' })
     }
 }
-const handleUpdateEduById = async (req, res) => {
+
+const handleUpdateExperienceById = async (req, res) => {
     console.log(req.body);
     const id = req.params.id;
     try {
-        await Edu.updateOne({_id: id}, {
+        await userExperience.updateOne({_id: id}, {
             email: req.body.email,
-            institution: req.body.institution,
-            degree: req.body.degree,
-            gpa: req.body.gpa,
+            title: req.body.title,
+            description: req.body.description,
+            farm: req.body.farm,
             starting: req.body.starting,
             ending: req.body.ending
         }).then(() => {
@@ -62,11 +61,11 @@ const handleUpdateEduById = async (req, res) => {
         res.json({ status: 'error', error: 'invalid token hr' })
     }
 }
-const handleDeleteEduById=async(req, res)=>{
+
+const handleDeleteExperienceById=async(req, res)=>{
     const id = req.params.id;
 	try {
-		await Edu.findByIdAndDelete(id);
-		//await edu.remove();
+		await userExperience.findByIdAndDelete(id);
 		res.json({ status: 'ok' })
 	} catch (error) {
 		console.log(error)
@@ -74,9 +73,9 @@ const handleDeleteEduById=async(req, res)=>{
 	}
 }
 module.exports = {
-    handleAddEducation,
-    handleUpdateEduById,
-    handleGetEducation,
-    handleGetEduById,
-    handleDeleteEduById
+    handleAddExperience,
+    handleGetExperience,
+    handleGetExperienceById,
+    handleUpdateExperienceById,
+    handleDeleteExperienceById
 }

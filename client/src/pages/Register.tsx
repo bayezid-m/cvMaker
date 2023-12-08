@@ -189,7 +189,7 @@ export default function Register() {
                 name="avater"
                 type="file"
                 id="avater"
-                accept="image/png, image/gif, image/jpeg"
+                accept="image/*"
                 onChange={handleImageUpload} />
             </Grid>
             <Grid item xs={12}>

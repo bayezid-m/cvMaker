@@ -40,10 +40,10 @@ const MyModal: React.FC<MyModalProps> = ({ isOpen, closeModal, content }) => {
     setNewStarting(education.starting)
     setNewEnding(education.ending)
   }, [education])
-  console.log(education);
+
 
   const handleUpdate =()=>{
-    dispatch(updateSingleEdu({eduData:{id: eduId, institution: newInstitute, email: education.email, degree: newDegree, gpa: newGpa, starting: newStarting, ending: newEnding}, eduId: content as string }))
+    dispatch(updateSingleEdu({eduData:{institution: newInstitute, email: education.email, degree: newDegree, gpa: newGpa, starting: newStarting, ending: newEnding}, eduId: content as string }))
     closeModal();
     window.location.reload()
     // dispatch(updateUser({ userData: { id: user?._id, first_name: firstName, last_name: lastName, email: email, status: status, occupation: occupation }, userId: user?._id as string }));
@@ -65,7 +65,6 @@ const MyModal: React.FC<MyModalProps> = ({ isOpen, closeModal, content }) => {
           <input type='text' value={newStarting} onChange={e => setNewStarting(e.target.value)}></input>
           <input type='text' value={newEnding} onChange={e => setNewEnding(e.target.value)}></input>
         </div>
-        <p>{content}</p>
         <button onClick={handleUpdate}>Update</button>
         <button onClick={closeModal}>Close Modal</button>
       </div>
@@ -77,14 +76,11 @@ const Educations = () => {
   const dispatch = useAppDispatch()
   const [doEdit, setDoEdit] = useState(false)
   const { educations, education } = useAppSelector(state => state.educationReducer)
-  const { user, users } = useAppSelector(state => state.userReducer);
+  const { user } = useAppSelector(state => state.userReducer);
 
   const [hereEducations, setHereEducations] = useState<Education[]>([])
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [modalContent, setModalContent] = useState('');
-
-
-  //console.log(educations);
 
   const [formData, setFormData] = useState({
     institution: '',
@@ -99,6 +95,7 @@ const Educations = () => {
     dispatch(getAllEducation())
     setHereEducations(educations)
   }, [doEdit, formData])
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
@@ -146,6 +143,7 @@ const Educations = () => {
     //setDoEdit(!doEdit)
     window.location.reload()
   }
+
   return (
     <div>
       <MyModal isOpen={modalIsOpen} closeModal={closeModal} content={modalContent} />
@@ -206,11 +204,11 @@ const Educations = () => {
           />
 
           {/* Submit Button */}
-          <button type="submit">Submit</button>
+          <button type="submit">ADD</button>
         </form>
         <div className='education'>
           {hereEducations.map((edu) => (
-            <ul>
+            <ul className='otherUl'>
               <li><h4>{edu.institution}</h4></li>
               <li>Degree: {edu.degree}</li>
               <li>Gpa: {edu.gpa}</li>
@@ -224,7 +222,7 @@ const Educations = () => {
         <h2>Education<button className='skilledit' onClick={openInput}><EditIcon /></button></h2>
         <div className='education'>
           {educations?.map((edu) => (
-            <ul>
+            <ul className='otherUl'>
               <li><h4>{edu.institution}</h4></li>
               <li>Degree: {edu.degree}</li>
               <li>Gpa: {edu.gpa}</li>

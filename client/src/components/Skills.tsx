@@ -10,6 +10,7 @@ import { AsyncThunkAction, Dispatch, AnyAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { UpdateUser } from '../types/UpdateUser';
 import { User } from '../types/User';
+import "../Styles/Profile.css"
 
 // interface MyComponentProps {
 //     data: string[];

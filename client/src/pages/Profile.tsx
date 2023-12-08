@@ -13,6 +13,7 @@ import "../Styles/Profile.css"
 import Skills from '../components/Skills';
 import Educations from '../components/Educations';
 import ProfileProject from '../components/ProfileProject';
+import Experiences from '../components/Experience';
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -41,8 +42,8 @@ const Profile = () => {
   useEffect(() => {
     dispatch(authenticate())
     initialValue()
-   
-   // dispatch(getAllEducation())
+
+    // dispatch(getAllEducation())
   }, [doEdit])
 
   const initialValue = () => {
@@ -59,7 +60,7 @@ const Profile = () => {
   console.log(firstName);
   const runningObject = educations.find(obj => obj.ending === "running");
 
- 
+
   const handleSubmit = () => {
     if (firstName === '' || email === '' || password === '' || rePassword === '') {
       setErrorMessage("Please fill all input")
@@ -101,11 +102,12 @@ const Profile = () => {
             <div className='cv'>
               <h3>Make my CV</h3>
               <p>You can make your CV from existing profile data or make it from scratch with help of AI</p>
-              <button className='cvButton'>From Profile</button>
+              <Link to='/userCV'><button className='cvButton'>From profile</button></Link>
               <button className='cvButton'>Make with AI</button>
             </div>
-            <Skills/>
-            <Educations/>
+            <Skills />
+            <Educations />
+            <Experiences />
             <ProfileProject data={user.email} />
           </div>
         </div>
