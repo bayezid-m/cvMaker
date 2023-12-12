@@ -5,8 +5,6 @@ const bcrypt = require('bcryptjs')
 
 
 const handleRegister = async (req, res) => {
-    console.log(req.body)
-    console.log("I am from controller");
     const newPassword = await bcrypt.hash(req.body.password, 10)
     console.log(newPassword);
     try {   

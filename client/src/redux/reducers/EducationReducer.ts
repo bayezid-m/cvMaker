@@ -55,6 +55,7 @@ export const addEducation = createAsyncThunk(
         }
     }
 )
+
 export const getAllEducation = createAsyncThunk(
     'getAllEducation',
     async () => {
@@ -106,7 +107,7 @@ export const deleteEducationById = createAsyncThunk(
 
             console.log("Deleting user with ID: ", eduId);
             const result = await axios.delete(`http://localhost:2000/api/v1/user/education/${eduId}`);
-            return result.data; // The returned result will be inside action.payload
+            return result.data; 
         } catch (e) {
             const error = e as AxiosError;
             return error;

@@ -123,7 +123,6 @@ export const getUserByEmail = createAsyncThunk(
                 "http://localhost:2000/api/v1/user/email",
                 email
               );
-              console.log(userByEmail.data);
               return userByEmail.data.userData;
                   
         }

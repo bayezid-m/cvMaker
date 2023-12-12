@@ -45,22 +45,18 @@ export default function Register() {
     const formData = new FormData();
     const file = event.target.files?.[0];
     if (file) {  
-      formData.append('file', file); // Append the file to the FormData
+      formData.append('file', file); 
     }
     formData.append("upload_preset", "ade40fld");
-    console.log("I am here");
+    //console.log("I am here");
     try {
       const response = await axios.post("https://api.cloudinary.com/v1_1/dv4j8hjqf/image/upload", formData);
       setImageSender(response.data.public_id);
-      //console.log(response.data.public_id);
-      //await second(); // Assuming second() is an asynchronous function
       console.log(imageSender);
-      //console.log('I am here');
     } catch (error) {
       console.log("Error occurred during user registration:", error);
       console.log("upload error");
     }
-    //second()
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

@@ -15,6 +15,7 @@ import useAppDispatch from '../hooks/useAppDispatch';
 import useAppSelector from '../hooks/useAppSelecter';
 import { useEffect } from 'react';
 import { authenticate } from '../redux/reducers/UserReducer'
+import { getCVByEmail } from '../redux/reducers/UserCVReducer';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
@@ -70,6 +71,7 @@ export default function NavBar({ check, change }: { check: any; change: any }) {
     const navigate = useNavigate();
     useEffect(() => {
         dispatch(authenticate())
+        dispatch(getCVByEmail({ email: user?.email }))
     }, [])
     const logout = () => {
         localStorage.setItem("token", "")

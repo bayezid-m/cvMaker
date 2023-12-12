@@ -1,0 +1,74 @@
+.all {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    margin-left: 100px;
+    gap: 50px;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.actions button {
+    width: 150px;
+}
+
+.app.cvTemplate02 {
+    width: 800px;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    border: 1px solid black;
+    height: 1148px; /* Ensure the container takes up the full height */
+    line-height: 0.6;
+}
+
+.info,
+.skill,
+.projects,
+.experiences,
+.educations {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px; /* Add margin between sections */
+}
+
+.info p {
+    margin: 5px 0;
+}
+
+.subskill {
+    background-color: #e0e0e0;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.projects > ul,
+.experiences > ul,
+.educations > ul {
+    list-style-type: disc; /* or your preferred list style type */
+    padding: 10px;
+}
+
+.projects li,
+.experiences li,
+.educations li {
+    list-style-type: none; /* Remove list-style-type for li elements */
+    margin-bottom: 5px;
+}
+
+.experiences .farm {
+    color: #555;
+}
+
+.educations .institution {
+    font-weight: bold;
+}
+
+.educations .degree,
+.educations .gpa,
+.experiences .farm {
+    color: #555;
+}

@@ -17,14 +17,6 @@ const handleAddProject = async (req, res) => {
     }
 }
 const handleGetAllProject = async(req, res)=>{
-    // try{   
-    //     const projectData = await UserProject.find()
-    //     const user = await User.find({ email: projectData.email })
-    //     return res.json({ status: 'ok',  projectData: projectData , userData: user})
-    // }
-    // catch (error) {
-    //     res.json({ status: 'error', user: false, message: error })
-    // }
     try {
         const projectData = await UserProject.find();
         

@@ -3,10 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
+import { Button, Dialog, DialogTitle } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelecter'
-import { Button } from '@mui/material';
 import { authenticate, updateUser } from '../redux/reducers/UserReducer';
 import { getAllEducation } from '../redux/reducers/EducationReducer'
 import "../Styles/Profile.css"
@@ -14,6 +15,8 @@ import Skills from '../components/Skills';
 import Educations from '../components/Educations';
 import ProfileProject from '../components/ProfileProject';
 import Experiences from '../components/Experience';
+import { getAllProjectByEmail } from '../redux/reducers/ProjectReducer';
+import { getCVByEmail } from '../redux/reducers/UserCVReducer';
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -32,7 +35,10 @@ const Profile = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const { user, users } = useAppSelector(state => state.userReducer);
   const { educations, education } = useAppSelector(state => state.educationReducer)
+  const { userCV } = useAppSelector(state => state.userCVReducer)
+
   const [doEdit, setDoEdit] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const logout = () => {
     localStorage.setItem("token", "")
@@ -42,9 +48,11 @@ const Profile = () => {
   useEffect(() => {
     dispatch(authenticate())
     initialValue()
-
+    dispatch(getCVByEmail({ email: user?.email }))
     // dispatch(getAllEducation())
   }, [doEdit])
+
+
 
   const initialValue = () => {
     setFirstName(user?.first_name)
@@ -57,7 +65,7 @@ const Profile = () => {
     setSkills(user?.skills)
     setImageSender(user?.image)
   }
-  console.log(firstName);
+  console.log(userCV);
   const runningObject = educations.find(obj => obj.ending === "running");
 
 
@@ -73,8 +81,21 @@ const Profile = () => {
       setDoEdit(false);
     }
   }
+  const handleButtonClick = () => {
+    setLoading(true);
+
+    // Simulate an asynchronous operation (e.g., fetching data) for 2 seconds
+    setTimeout(() => {
+      setLoading(false);
+
+      // Navigate to another page after loading is complete
+      navigate('/userCV');
+    }, 2500);
+  };
+
 
   const imageUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + user?.image + ".jpg"
+  const CVUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + userCV?.image + ".jpg"
 
   return (
     <div className='profile'>
@@ -99,15 +120,21 @@ const Profile = () => {
           </div>
           <div>
             <h2>My CV</h2>
-            <div className='cv'>
+            {userCV?<div className='cv'>
+            <img src={CVUrl} className="poster" alt=" "></img>
+            </div>: <div className='cv'>
               <h3>Make my CV</h3>
               <p>You can make your CV from existing profile data or make it from scratch with help of AI</p>
-              <Link to='/userCV'><button className='cvButton'>From profile</button></Link>
-              <button className='cvButton'>Make with AI</button>
-            </div>
+              <button className='cvButton' onClick={handleButtonClick}>From profile</button>
+              <button className='cvButton'>Make New</button>
+              <Dialog open={loading}>
+                <DialogTitle><CircularProgress sx={{ marginLeft: '30%' }} /> <br />
+                  Please wait</DialogTitle>
+              </Dialog>
+            </div>}
             <Skills />
-            <Educations />
             <Experiences />
+            <Educations />
             <ProfileProject data={user.email} />
           </div>
         </div>
