@@ -231,13 +231,13 @@ const CvInputs = () => {
           onChange={(e) => setNewGpa(Number(e.target.value))}
         />
         <input
-          type="text"
+          type="date"
           placeholder="Starting Date"
           value={newStarting}
           onChange={(e) => setNewStarting(e.target.value)}
         />
         <input
-          type="text"
+          type="date"
           placeholder="Ending Date"
           value={newEnding}
           onChange={(e) => setNewEnding(e.target.value)}
@@ -273,13 +273,13 @@ const CvInputs = () => {
           onChange={(e) => setNewFarm(e.target.value)}
         />
         <input
-          type="text"
+          type="date"
           placeholder="Starting Date"
           value={newExperienceStarting}
           onChange={(e) => setNewExperienceStarting(e.target.value)}
         />
         <input
-          type="text"
+          type="date"
           placeholder="Ending Date (optional)"
           value={newExperienceEnding}
           onChange={(e) => setNewExperienceEnding(e.target.value)}

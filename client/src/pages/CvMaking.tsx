@@ -161,8 +161,7 @@ const CvMaking: React.FC = () => {
   return (
     <div className="all">
       <div className="actions">
-        <button onClick={getFeedback}>Feedback</button>
-        
+        <button onClick={getFeedback}>Feedback</button>       
         <div className="modal-container">
           <FeedbackModal isOpen={modalIsOpen} onClose={closeModal} feedback={feedback} />
         </div>
