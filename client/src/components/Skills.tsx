@@ -3,7 +3,6 @@ import useAppSelector from '../hooks/useAppSelecter'
 import EditIcon from '@mui/icons-material/Edit';
 import CloseIcon from '@mui/icons-material/Close';
 
-
 import useAppDispatch from '../hooks/useAppDispatch'
 import { authenticate, updateUser } from '../redux/reducers/UserReducer';
 import { AsyncThunkAction, Dispatch, AnyAction } from '@reduxjs/toolkit';
@@ -11,11 +10,6 @@ import { AxiosError } from 'axios';
 import { UpdateUser } from '../types/UpdateUser';
 import { User } from '../types/User';
 import "../Styles/Profile.css"
-
-// interface MyComponentProps {
-//     data: string[];
-//   }
-//const Skills : React.FC<MyComponentProps> = (props) => {
 
 const Skills = () => {
     const dispatch = useAppDispatch()
@@ -26,11 +20,9 @@ const Skills = () => {
     const { user, users } = useAppSelector(state => state.userReducer);
 
     useEffect(() => {
-        //dispatch(authenticate())
         setSkills(user?.skills)
     }, [doEdit])
 
-    //console.log(skills);
     const openInput = () => {
         setDoEdit(!doEdit)
     }
@@ -44,12 +36,10 @@ const Skills = () => {
         const newSkilArray = [...skills, newSkill]
         setSkills(newSkilArray)
         setNewSkill('')
-        //dispatch(authenticate())
     }
     const handleChange = () => {
         dispatch(updateUser({ userData: { id: user?._id, skills: skills }, userId: user?._id as string }));
         setDoEdit(false);
-        //window.location.reload()
     }
 
     return (

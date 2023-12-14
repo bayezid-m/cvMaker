@@ -16,6 +16,7 @@ import useAppSelector from '../hooks/useAppSelecter';
 import { useEffect } from 'react';
 import { authenticate } from '../redux/reducers/UserReducer'
 import { getCVByEmail } from '../redux/reducers/UserCVReducer';
+import logo from '../demoImages/logo.png';
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
     width: 62,
@@ -69,22 +70,34 @@ export default function NavBar({ check, change }: { check: any; change: any }) {
     const { user, checkemail, loading, error } = useAppSelector(state => state.userReducer)
     const token: any = localStorage.getItem("token" || "")
     const navigate = useNavigate();
+
     useEffect(() => {
         dispatch(authenticate())
         dispatch(getCVByEmail({ email: user?.email }))
     }, [])
     const logout = () => {
         localStorage.setItem("token", "")
-        navigate('/')
+        navigate('/login')
     }
-    
+  
     return (
         <Box sx={{ flexGrow: 1, position: 'fixed', top: 0, width: '100%' }}>
-            <AppBar position="static" sx={{ backgroundColor: "primary.main" }}>
+            <AppBar position="static">
                 <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "primary.contrastText", fontFamily: 'Nico Moji' }}>
-                        <Link to="/">LinkTeaser</Link>
-                    </Typography>
+                    {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: "primary.contrastText", fontFamily: 'Nico Moji' }}> */}
+                        <Link to="/"><img src={logo} alt="" style={{height: "60px", width: "170px", marginTop: "5px"}}/></Link>
+                    {/* </Typography> */}
+                    <div className='actions' style={{
+                         marginLeft: 'auto', 
+                         marginRight: '30%' , 
+                         display: "flex",
+                         flexDirection: "row",
+                         gap: "30px"
+                         }}>
+                        <Link to="/others">People</Link>
+                        <Link to="/others">People</Link>
+                        <Link to="/others">People</Link>
+                    </div>
                     {token ?
                         <div style={{ display: 'flex', gap: 10 }}>
                             <Link to='/profile'><p style={{ color: "primary.contrastText" }}>{user?.first_name}</p></Link>

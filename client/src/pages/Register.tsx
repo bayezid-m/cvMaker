@@ -77,7 +77,7 @@ export default function Register() {
       }
       else {
         dispatch(createSingleUser({ userData: { firstName: firstName, lastName: lastName, email: email, password: password, status: status, occupation: occupation, imageSender: imageSender , skills: skills} }));
-        navigate('/');
+        navigate('/login');
       }
     }
     else {

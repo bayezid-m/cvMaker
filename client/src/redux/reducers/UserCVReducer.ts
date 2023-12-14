@@ -25,9 +25,9 @@ const initialState:{
 
 export const addCV = createAsyncThunk(
     'addCV',
-    async ({ userData: eduData }: { userData: UserCV }) => {
+    async ({ userData: cvData }: { userData: UserCV }) => {
         try {
-            const result = await axios.post<UserCV>("http://localhost:2000/api/v1/user/CV/add", eduData);
+            const result = await axios.post<UserCV>("http://localhost:2000/api/v1/user/CV/add", cvData);
             return result.data;
         } catch (e) {
             const error = e as AxiosError;
@@ -76,7 +76,7 @@ const userCVSlice = createSlice({
             if (action.payload instanceof AxiosError) {
                 state.error = action.payload.message
             } else {
-                state.newCV = action.payload
+                state.userCV = action.payload
             }
             state.loading = false
         })

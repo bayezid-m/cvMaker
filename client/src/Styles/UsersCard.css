@@ -1,0 +1,28 @@
+.usersCard {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.childUserCard{
+    display: inline-block;
+    margin: 10px;
+    background-color: rgb(205, 221, 255);
+    gap: 10px;
+    width: 800px;
+    height: 150px;
+    border-radius: 10px;
+    display: flex;
+    margin-left: 10%;
+    justify-content: space-between;
+
+}
+.cardImage {
+    max-width: 150px;
+    max-height: 100px;
+    
+    margin: 25px 10px 10px 10px;
+    border-radius: 10px;
+}
+.data{
+    text-align: left;
+}

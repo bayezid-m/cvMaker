@@ -21,7 +21,8 @@
     padding: 20px;
     font-family: 'Arial', sans-serif;
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Two columns */
+    grid-template-columns: 1fr 1fr;
+    /* Two columns */
     grid-gap: 20px;
     border: 1px solid black;
     height: 1080px;
@@ -46,10 +47,11 @@
     margin: 10px 0;
 }
 
-.projects > ul,
-.experiences > ul,
-.educations > ul {
-    list-style-type: disc; /* or your preferred list style type */
+.projects>ul,
+.experiences>ul,
+.educations>ul {
+    list-style-type: disc;
+    /* or your preferred list style type */
     padding: 10px;
     margin-bottom: 20px;
 }
@@ -57,9 +59,10 @@
 .projects li,
 .experiences li,
 .educations li {
-    list-style-type: none; /* Remove list-style-type for li elements */
+    list-style-type: none;
+    /* Remove list-style-type for li elements */
     margin-bottom: 10px;
-   
+
 }
 
 .experiences .farm {
@@ -76,4 +79,26 @@
 
 .educations .gpa {
     color: #555;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #e0e0e0;
+    height: 500px;
+    width: 700px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+
 }

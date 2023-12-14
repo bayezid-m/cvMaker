@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
 import { Button, Dialog, DialogTitle } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+import Modal from 'react-modal';
 
 import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelecter'
@@ -17,6 +17,8 @@ import ProfileProject from '../components/ProfileProject';
 import Experiences from '../components/Experience';
 import { getAllProjectByEmail } from '../redux/reducers/ProjectReducer';
 import { getCVByEmail } from '../redux/reducers/UserCVReducer';
+import MyModal from '../components/CVModel';
+
 
 const Profile = () => {
   const dispatch = useAppDispatch()
@@ -39,6 +41,9 @@ const Profile = () => {
 
   const [doEdit, setDoEdit] = useState(false)
   const [loading, setLoading] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalContent, setModalContent] = useState('');
+  const [cvOwner, setCvOwner] = useState('');
 
   const logout = () => {
     localStorage.setItem("token", "")
@@ -66,6 +71,7 @@ const Profile = () => {
     setImageSender(user?.image)
   }
   console.log(userCV);
+  
   const runningObject = educations.find(obj => obj.ending === "running");
 
 
@@ -92,9 +98,18 @@ const Profile = () => {
       navigate('/userCV');
     }, 2500);
   };
+  const openModal = (content: string) => {
+    setModalContent(content);
+    setCvOwner(user.email)
+    setModalIsOpen(true);
+  };
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   const imageUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + user?.image + ".jpg"
+
   const CVUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + userCV?.image + ".jpg"
 
   return (
@@ -120,13 +135,16 @@ const Profile = () => {
           </div>
           <div>
             <h2>My CV</h2>
-            {userCV?<div className='cv'>
-            <img src={CVUrl} className="poster" alt=" "></img>
+            {userCV?.image?<div className='cv'>
+              <button className='CvShowButton' onClick={() => openModal(userCV?.image as string)}>
+              <img src={CVUrl} className="poster" alt=" "></img>
+              </button>          
+            <MyModal isOpen={modalIsOpen} closeModal={closeModal} content={modalContent} owner={cvOwner}/>
             </div>: <div className='cv'>
               <h3>Make my CV</h3>
               <p>You can make your CV from existing profile data or make it from scratch with help of AI</p>
               <button className='cvButton' onClick={handleButtonClick}>From profile</button>
-              <button className='cvButton'>Make New</button>
+              <Link to='/cvInputs'><button className='cvButton'>Make New</button></Link>     
               <Dialog open={loading}>
                 <DialogTitle><CircularProgress sx={{ marginLeft: '30%' }} /> <br />
                   Please wait</DialogTitle>

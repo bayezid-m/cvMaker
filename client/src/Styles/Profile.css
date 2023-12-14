@@ -1,6 +1,6 @@
 .mainContainer {
     display: flex;
-    gap: 30px
+    gap: 30px;
 }
 
 .imageContainer {
@@ -35,6 +35,10 @@
     border-radius: 10px;
     padding-bottom: 20px;
     text-align: center;
+}
+.CvShowButton{
+    border: none;
+    margin-top: 10px;
 }
 
 .cvButton{

@@ -13,6 +13,11 @@ import Footer from './components/Footer';
 import Jobs from './pages/Jobs';
 import Events from './pages/Events';
 import CvMaking from './pages/CvMaking'
+import OtherUser from './pages/OtherUser';
+import OtherProfile from './pages/OtherProfile';
+import ManualCvMaking from './pages/ManualCvMaking';
+import CvInputs from './pages/CvInputs';
+
 
 function App() {
   const [isDark, setIsDark] = useState(false)
@@ -61,6 +66,11 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/userCV' element={<CvMaking/>}/> 
+            <Route path='/others' element={<OtherUser/>}/>
+            <Route path='/others/:userId' element={<OtherProfile/>}/>
+            <Route path='/cvInputs' element={<CvInputs/>}/>
+            <Route path='/manualCv' element={<ManualCvMaking/>}/>
+            
           </Routes>
         </BrowserRouter>
       </Paper>

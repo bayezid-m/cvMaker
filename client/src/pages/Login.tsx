@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,25 +17,40 @@ import { useNavigate } from 'react-router-dom';
 
 import useAppDispatch from '../hooks/useAppDispatch';
 import { login } from '../redux/reducers/UserReducer';
+import { getAllProject } from '../redux/reducers/ProjectReducer';
 
 const defaultTheme = createTheme();
+
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
+    const token: any = localStorage.getItem("token" || "")
+    
+    useEffect(() => {
+        if(token){
+          dispatch(getAllProject())
+          navigate('/');
+        }
+        else{
+            navigate('/login')
+        }
+      }, [token])
+      
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (email !== '' && password !== '') {
             dispatch(login({ email, password }));
-            navigate('/');
+            window.location.reload();                   
         }
         else {
             setErrorMessage('Please check inputs again');
         }
     };
 
+  
     return (
         <ThemeProvider theme={defaultTheme}>
         <Container component="main" maxWidth="xs">

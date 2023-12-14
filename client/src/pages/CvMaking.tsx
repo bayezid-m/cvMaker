@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { saveAs } from 'file-saver';
 
 import useAppDispatch from '../hooks/useAppDispatch'
 import useAppSelector from '../hooks/useAppSelecter'
@@ -12,12 +11,18 @@ import "../Styles/CVTemplate02.css"
 import { getAllProjectByEmail } from '../redux/reducers/ProjectReducer'
 import { getAllExperience } from '../redux/reducers/ExperienceReducer'
 import { getAllEducation } from '../redux/reducers/EducationReducer'
+import FeedbackModal from '../components/FeedBackModal';
 import axios from 'axios';
+import { addCV } from '../redux/reducers/UserCVReducer';
 
 interface PrintComponentProps {
   content: React.ReactNode;
 }
 const PrintComponent: React.FC<PrintComponentProps> = ({ content }) => {
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate();
+  const { user } = useAppSelector(state => state.userReducer);
+
   const componentRef = useRef<HTMLDivElement | null>(null);
   const [imageSender, setImageSender] = useState('');
 
@@ -26,36 +31,32 @@ const PrintComponent: React.FC<PrintComponentProps> = ({ content }) => {
   });
 
   const handleImage = async () => {
-    if (componentRef.current) {
-      const canvas = await html2canvas(componentRef.current);
-      const imageData = canvas.toDataURL('image/jpeg');
+    try {
+      if (componentRef.current) {
+        const canvas = await html2canvas(componentRef.current);
+        const imageData = canvas.toDataURL('image/jpeg');
 
-      // Save image as a file
-      saveAs(imageData, 'your_image.jpg');
+        const formData = new FormData();
+        formData.append('file', dataURItoBlob(imageData), 'your_image.jpg');
+        formData.append('upload_preset', 'ade40fld');
 
-      // Upload the image to Cloudinary
-      const formData = new FormData();
-      formData.append('file', dataURItoBlob(imageData), 'your_image.jpg');
-      formData.append('upload_preset', 'ade40fld');
 
-      try {
-        const response = await axios.post<{ public_id: string }>(
-          'https://api.cloudinary.com/v1_1/dv4j8hjqf/image/upload',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
+        const response = await axios.post("https://api.cloudinary.com/v1_1/dv4j8hjqf/image/upload", formData);
         setImageSender(response.data.public_id);
-        console.log('Image uploaded successfully:', imageSender);
-        console.log(imageSender);
-      } catch (error) {
-        console.error('Error occurred during image upload:', error);
+        if (response.data.public_id) {
+          dispatch(addCV({ userData: { email: user.email, image: response.data.public_id } }))
+          navigate('/profile')
+        }
+        else {
+          console.log("upload again");
+        }
       }
+    } catch (error) {
+      console.error('Error occurred during image upload:', error);
     }
+
   };
+
   const dataURItoBlob = (dataURI: string): Blob => {
     const byteString = atob(dataURI.split(',')[1]);
     const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
@@ -71,12 +72,17 @@ const PrintComponent: React.FC<PrintComponentProps> = ({ content }) => {
   return (
     <div>
       <button onClick={handlePrint}>Save as PDF</button><span>   </span>
-      <button onClick={handleImage}>Save</button>
+      <button onClick={handleImage}>Save to profile</button>
+
       <p></p>
       <div ref={componentRef}>{content}</div>
     </div>
   );
 };
+
+//////
+
+
 const CvMaking: React.FC = () => {
   const navigate = useNavigate();
 
@@ -85,12 +91,15 @@ const CvMaking: React.FC = () => {
     dispatch(getAllEducation())
     dispatch(getAllProjectByEmail({ email: user.email }))
   }, [])
+  
   const dispatch = useAppDispatch()
   const { user } = useAppSelector(state => state.userReducer);
   const { educations } = useAppSelector(state => state.educationReducer)
   const { experiences } = useAppSelector(state => state.experienceReducer)
   const { userProject } = useAppSelector(state => state.projectReducer)
   const [activeStyle, setActiveStyle] = useState<string>('cvTemplate01');
+  const [feedback, setFeedback] = useState<any>(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const exit = () => {
     navigate('/profile')
@@ -101,20 +110,16 @@ const CvMaking: React.FC = () => {
 
 
   const getFeedback = async () => {
-    // Create a new jsPDF instance
     const pdf = new jsPDF();
 
-    // Get the content of the "app" div
     const appDiv = document.getElementById('pdfContent');
     if (appDiv) {
-      // Create a new jsPDF instance
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4',
       });
 
-      // Extract text content from child elements of the "app" div
       const textContent = Array.from(appDiv.children)
         .map((child) => {
           if (child instanceof HTMLElement) {
@@ -124,25 +129,24 @@ const CvMaking: React.FC = () => {
         })
         .join('\n');
 
-      // Add the extracted text content to the PDF
       pdf.text(textContent, 10, 10);
-
-      // Download the PDF
-      //pdf.save('my_cv.pdf');
       const pdfBlob = pdf.output('blob');
 
-      // Create a FormData object and append the Blob as a file
       const formData = new FormData();
       formData.append('file', pdfBlob, 'my_cv.pdf');
 
-      // Send the FormData to the API
-      fetch('http://127.0.0.1:5000/upload', {
+      fetch('https://receiver-oucl.onrender.com/upload', {
         method: 'POST',
         body: formData,
       })
         .then((response) => response.json())
         .then((data) => {
           console.log('API Response:', data);
+          setFeedback(data.feedback);
+          console.log(feedback);
+          if (feedback !== null) {
+            setModalIsOpen(true);
+          }
         })
         .catch((error) => {
           console.error('Error sending PDF to API:', error);
@@ -150,11 +154,19 @@ const CvMaking: React.FC = () => {
     }
   };
 
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <div className="all">
       <div className="actions">
         <button onClick={getFeedback}>Feedback</button>
+        
+        <div className="modal-container">
+          <FeedbackModal isOpen={modalIsOpen} onClose={closeModal} feedback={feedback} />
+        </div>
+
         <button onClick={() => handleButtonClick('cvTemplate01')}>Use Template 1</button>
         <button onClick={() => handleButtonClick('cvTemplate02')}>Use Template 2</button>
         <button className="exit" onClick={exit}>Exit</button>

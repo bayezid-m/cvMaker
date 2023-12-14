@@ -1,5 +1,10 @@
 const express = require('express')
 const User = require('../model/user')
+const Edu = require('../model/userEduction')
+const UserProject = require('../model/userProject')
+const userExperience = require('../model/userExperience')
+const UserCV = require('../model/userCV')
+
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
@@ -75,6 +80,43 @@ const handleGetProfileByEmail = async(req, res)=>{
         res.json({ status: 'error', error: 'invalid token hr' })
     }
 }
+const handleGetAllProfileData = async(req, res)=>{
+    const userId = req.params.userId;
+
+    try {
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      const userEmail = user.email;
+  
+      const educations = await Edu.find({ email:userEmail });
+      const projects = await UserProject.find({ email:userEmail });
+      const experiences = await userExperience.find({ email: userEmail })
+      const userCV = await UserCV.find({email: userEmail})
+
+      return res.json({ status: 'ok',userData: user,project: projects, education: educations, experience: experiences, userCV: userCV })
+      
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+const handleGetAllProfile = async(req, res)=>{
+    const token = req.headers['x-access-token']
+    //const email = req.body.email
+	try {
+		const decoded = jwt.verify(token, 'secret123')
+		const email = decoded.email     
+		const users = await User.find({ email: { $nin: email } })
+		return res.json({ status: 'ok', users: users })
+	} catch (error) {
+		console.log(error)
+		res.json({ status: 'error', error: 'invalid token hr' })
+	}
+}
 
 const handleUpdateProfile = async(req, res)=>{
     try {
@@ -98,6 +140,8 @@ module.exports = {
     handleRegister,
     handleLogin,
     handleGetProfile,
+    handleGetAllProfile,
     handleGetProfileByEmail,
+    handleGetAllProfileData,
     handleUpdateProfile
 }

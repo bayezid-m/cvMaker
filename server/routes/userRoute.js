@@ -5,6 +5,8 @@ const {
     handleLogin,
     handleGetProfile,
     handleUpdateProfile,
+    handleGetAllProfile,
+    handleGetAllProfileData,
     handleGetProfileByEmail
 } = require('../controllers/useController')
 
@@ -22,6 +24,10 @@ router.post('/login', handleLogin);
 router.get('/', handleGetProfile);
 //get a user profile by email
 router.post('/email', handleGetProfileByEmail);
+//get all profile eccept logedin profile
+router.get('/getAll', handleGetAllProfile)
+//get all data of an user by id
+router.get('/:userId', handleGetAllProfileData)
 
 //updating user
 router.put('/(:id)', handleUpdateProfile);

@@ -114,6 +114,25 @@ export const authenticate = createAsyncThunk(
         }
     }
 )
+export const getAllProfile = createAsyncThunk(
+    "getAllProfile",
+    async () => {
+        try {
+            const allUsers = await axios.get<{users: User[]}>("http://localhost:2000/api/v1/user/getAll",
+                {
+                    headers: {
+                        'x-access-token': localStorage.getItem('token')
+                    }
+                }
+            )
+            return allUsers.data.users           
+        }
+        catch (e) {
+            const error = e as AxiosError
+            return error
+        }
+    }
+)
 export const getUserByEmail = createAsyncThunk(
     "getUerByEmail",
     async ( email: {email: string}) => {
@@ -168,6 +187,14 @@ const usersSlice = createSlice({
                     state.error = action.payload.message
                 } else {
                     state.user = action.payload
+                }
+                state.loading = false
+            })
+            .addCase(getAllProfile.fulfilled, (state, action) => {
+                if (action.payload instanceof AxiosError) {
+                    state.error = action.payload.message
+                } else {
+                    state.users = action.payload
                 }
                 state.loading = false
             })
