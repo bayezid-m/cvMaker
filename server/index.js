@@ -13,7 +13,7 @@ const cvRouter = require("./routes/cvRouter")
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
-
+const port = process.env.PORT || 2000;
 //user router
 app.use("/api/v1/user", userRouter)
 //user education router
@@ -25,7 +25,7 @@ app.use("/api/v1/project", projectRouter)
 //user CV router
 app.use("/api/v1/user/CV", cvRouter)
 
-app.listen(2000, () => {
-    console.log('Server is running on port 2000.');
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
     connectDB();
 })
