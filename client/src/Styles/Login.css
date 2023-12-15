@@ -1,0 +1,46 @@
+.top-right {
+    position: fixed;
+    margin-top: 30px;
+    right: 0;
+    width: 400px;
+    height: 0;
+    border-radius: 10px;
+    border-left: 30px solid transparent;
+    border-bottom: 250px solid #1d1df1;
+    /* Set your desired background color */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    
+}
+
+.bottom-left {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 500px;
+    height: 0;
+    border-radius: 10px;
+    border-right: 30px solid transparent;
+    border-bottom: 300px solid #1d1df1;
+    /* Set your desired background color */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+.login1{
+    width: 300px;
+    border-radius: 10px;
+    padding: 20px;
+    padding-left: -20px;
+}
+.login2{
+    width: 400px;
+    padding-top: 20px;
+
+}
+.logo{
+    position: fixed;
+    height: 100px; 
+}
+.intro{
+    position: fixed;
+    margin-top: 90px;
+    margin-left: 45px;
+}

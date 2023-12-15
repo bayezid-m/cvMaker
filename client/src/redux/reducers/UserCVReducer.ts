@@ -27,7 +27,7 @@ export const addCV = createAsyncThunk(
     'addCV',
     async ({ userData: cvData }: { userData: UserCV }) => {
         try {
-            const result = await axios.post<UserCV>("http://localhost:2000/api/v1/user/CV/add", cvData);
+            const result = await axios.post<UserCV>("https://cvmaker-server.onrender.com/api/v1/user/CV/add", cvData);
             return result.data;
         } catch (e) {
             const error = e as AxiosError;
@@ -41,7 +41,7 @@ export const getCVByEmail = createAsyncThunk(
         console.log(email);
         try {
             const response = await axios.post<{ userData: UserCV}>(
-                "http://localhost:2000/api/v1/user/CV/email",
+                "https://cvmaker-server.onrender.com/api/v1/user/CV/email",
                  email
             );      
             return response.data.userData;
@@ -57,7 +57,7 @@ export const deleteCVById = createAsyncThunk(
     async (CVId: string) => {
         try {
             console.log("Deleting CV with ID: ", CVId);
-            const result = await axios.delete(`http://localhost:2000/api/v1/user/CV/${CVId}`);
+            const result = await axios.delete(`https://cvmaker-server.onrender.com/api/v1/user/CV/${CVId}`);
             return result.data; 
         } catch (e) {
             const error = e as AxiosError;

@@ -5,7 +5,7 @@ import '../Styles/JobComponent.css'
 const JobComponent = () => {
   return (
     <div className='CompoItem'>
-      <div className="logo">
+      <div className="company_logo">
         <img src={atc} alt="" style={{ height: "50px", borderRadius: 5}}/>
       </div>
       <div className="info">

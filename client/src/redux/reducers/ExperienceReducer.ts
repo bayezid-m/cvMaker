@@ -44,7 +44,7 @@ export const addExperience = createAsyncThunk(
     'addExperience',
     async ({ userData: expData }: { userData: Experience }) => {
         try {
-            const result = await axios.post<Experience>("http://localhost:2000/api/v1/user/experience/add", expData);
+            const result = await axios.post<Experience>("https://cvmaker-server.onrender.com/api/v1/user/experience/add", expData);
             return result.data;
         } catch (e) {
             const error = e as AxiosError;
@@ -56,7 +56,7 @@ export const getAllExperience = createAsyncThunk(
     'getAllExperience',
     async () => {
         try {
-            const allexp = await axios.get<{ userData: Experience[] }>("http://localhost:2000/api/v1/user/experience/all",
+            const allexp = await axios.get<{ userData: Experience[] }>("https://cvmaker-server.onrender.com/api/v1/user/experience/all",
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
@@ -76,7 +76,7 @@ export const getSingleExpById = createAsyncThunk(
     async (expId: string) => {
         console.log(expId);
         try {
-            const result = await axios.get<{ userData: Experience }>(`http://localhost:2000/api/v1/user/experience/${expId}`);
+            const result = await axios.get<{ userData: Experience }>(`https://cvmaker-server.onrender.com/api/v1/user/experience/${expId}`);
             return result.data.userData; // The returned result will be inside action.payload
         } catch (e) {
             const error = e as AxiosError;
@@ -88,7 +88,7 @@ export const updateSingleExp = createAsyncThunk(
     'updateSingleExp',
     async ({ expData, expId }: { expData: Experience, expId: string }) => {
         try {
-            const result = await axios.put<Experience>(`http://localhost:2000/api/v1/user/experience/update/${expId}`, expData);
+            const result = await axios.put<Experience>(`https://cvmaker-server.onrender.com/api/v1/user/experience/update/${expId}`, expData);
             return result.data;
         } catch (e) {
             const error = e as AxiosError;
@@ -101,7 +101,7 @@ export const deleteExperienceById = createAsyncThunk(
     async (expId: string) => {
         try {
             //console.log("Deleting user with ID: ", eduId);
-            const result = await axios.delete(`http://localhost:2000/api/v1/user/experience/${expId}`);
+            const result = await axios.delete(`https://cvmaker-server.onrender.com/api/v1/user/experience/${expId}`);
             return result.data; // The returned result will be inside action.payload
         } catch (e) {
             const error = e as AxiosError;

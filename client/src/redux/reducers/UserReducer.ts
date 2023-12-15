@@ -69,7 +69,7 @@ export const createSingleUser = createAsyncThunk(
     'createAUser',
     async ({ userData }: { userData: NewUser }) => {
         try {
-            const result = await axios.post<NewUser>("http://localhost:2000/api/v1/user/register", userData);
+            const result = await axios.post<NewUser>("https://cvmaker-server.onrender.com/api/v1/user/register", userData);
             return result.data; // The returned result will be inside action.payload
         } catch (e) {
             const error = e as AxiosError;
@@ -82,9 +82,8 @@ export const login = createAsyncThunk(
     "login",
     async ({ email, password }: UserCredential, { dispatch }) => {
         try {
-            const result = await axios.post<{ token: string }>("http://localhost:2000/api/v1/user/login", { email, password })
+            const result = await axios.post<{ token: string }>("https://cvmaker-server.onrender.com/api/v1/user/login", { email, password })
             const accessToken = result.data.token
-            console.log("I am here");
             localStorage.setItem("token", accessToken)
             const authentication = await dispatch(authenticate())
             return authentication.payload as User
@@ -99,7 +98,7 @@ export const authenticate = createAsyncThunk(
     "authenticate",
     async () => {
         try {
-            const authentication = await axios.get<{userData: User}>("http://localhost:2000/api/v1/user",
+            const authentication = await axios.get<{userData: User}>("https://cvmaker-server.onrender.com/api/v1/user",
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
@@ -118,7 +117,7 @@ export const getAllProfile = createAsyncThunk(
     "getAllProfile",
     async () => {
         try {
-            const allUsers = await axios.get<{users: User[]}>("http://localhost:2000/api/v1/user/getAll",
+            const allUsers = await axios.get<{users: User[]}>("https://cvmaker-server.onrender.com/api/v1/user/getAll",
                 {
                     headers: {
                         'x-access-token': localStorage.getItem('token')
@@ -139,7 +138,7 @@ export const getUserByEmail = createAsyncThunk(
         console.log(email);
         try {
             const userByEmail = await axios.post<{ userData: User }>(
-                "http://localhost:2000/api/v1/user/email",
+                "https://cvmaker-server.onrender.com/api/v1/user/email",
                 email
               );
               return userByEmail.data.userData;
@@ -156,7 +155,7 @@ export const updateUser = createAsyncThunk(
     async ({ userData, userId }: { userData: UpdateUser, userId: string }, { dispatch }) => {
         try {
             console.log("I am here");
-            const result = await axios.put<User>(`http://localhost:2000/api/v1/user/${userId}`, userData);
+            const result = await axios.put<User>(`https://cvmaker-server.onrender.com/${userId}`, userData);
             //return result.data; // The returned result will be inside action.payload
             const authentication = await dispatch(authenticate())
             return authentication.payload as User

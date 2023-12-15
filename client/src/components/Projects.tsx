@@ -52,7 +52,6 @@ const CombinedCard: React.FC<ProjectCardProps> = ({ project, }) => {
 
 const Projects = () => {
   const { projects } = useAppSelector(state => state.projectReducer)
-  console.log(projects);
 
   return (
     <Container>

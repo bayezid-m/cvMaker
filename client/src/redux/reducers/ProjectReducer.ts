@@ -44,10 +44,10 @@ const initialState: {
 }
 
 export const addNewProject = createAsyncThunk(
-    'addEducation',
+    'addNewProject',
     async ({ projectData: projectData }: { projectData: NewProject }) => {
         try {
-            const result = await axios.post<NewProject>("http://localhost:2000/api/v1/project/add", projectData);
+            const result = await axios.post<NewProject>("https://cvmaker-server.onrender.com/api/v1/project/add", projectData);
             return result.data;
         } catch (e) {
             const error = e as AxiosError;
@@ -59,7 +59,7 @@ export const getAllProject = createAsyncThunk(
     'getAllProject',
     async () => {
         try {
-            const result = await axios.get<{ projectData: Project[] }>("http://localhost:2000/api/v1/project/all")
+            const result = await axios.get<{ projectData: Project[] }>("https://cvmaker-server.onrender.com/api/v1/project/all")
             return result.data.projectData
         }
         catch (e) {
@@ -72,7 +72,7 @@ export const getAllProjectByEmail = createAsyncThunk(
     'getAllProjectByEmail',
     async (email: {email: string}) => {
         try {
-            const result = await axios.post<{ projectData: Project[] }>("http://localhost:2000/api/v1/project/all/email", email)
+            const result = await axios.post<{ projectData: Project[] }>("https://cvmaker-server.onrender.com/api/v1/project/all/email", email)
             return result.data.projectData
         }
         catch (e) {

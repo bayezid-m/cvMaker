@@ -20,17 +20,9 @@ const DashBoar = () => {
     else{
         navigate('/login')
     }
-    // if(localStorage.getItem('token')===''){
-    //   navigate('/login')
-    // }
-    // else{
-    //   dispatch(getAllProject())
-    // }
-    //dispatch(getAllProject())
   }, [user])
 
   const { projects } = useAppSelector(state => state.projectReducer)
-  console.log(projects);
   return (
     <Container className='App'>
     < Projects/>

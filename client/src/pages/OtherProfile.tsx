@@ -5,7 +5,7 @@ import "../Styles/Profile.css"
 import { Button, Card } from '@mui/material';
 import MyModal from '../components/CVModel';
 
-const API_URL = 'http://localhost:2000/api/v1/user/';
+const API_URL = 'https://cvmaker-server.onrender.com/api/v1/user';
 
 interface Education {
   // Define your Education interface here based on your JSON structure
