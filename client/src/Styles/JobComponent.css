@@ -1,0 +1,52 @@
+.jobCard{
+    align-items: center;
+    text-align: center;
+    margin-top: 63px;
+    text-decoration: none;
+}
+.filter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #cdddff;
+    padding: 10px;
+  }
+  
+  .item {
+    background-color: rgb(29, 29, 241);
+    color: white;
+    padding: 8px 16px;
+    margin: 0 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .compoCardContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Optionally, you can set a specific height for the container */
+}
+  .compoCard{
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  .CompoItem{
+    background-color: #cdddff;
+    width: 500px;
+    height: max-content;
+    min-height: 100px;
+    border-radius: 10px;
+    display: flex;
+  }
+  .logo{
+    text-align: left;
+    margin: 25px;
+  }
+  .info{
+    text-align: left;
+    margin-top: -10px;
+  }

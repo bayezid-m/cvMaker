@@ -70,7 +70,8 @@ function App() {
             <Route path='/others/:userId' element={<OtherProfile/>}/>
             <Route path='/cvInputs' element={<CvInputs/>}/>
             <Route path='/manualCv' element={<ManualCvMaking/>}/>
-            
+            <Route path='/events' element={<Events/>}/>
+            <Route path='/jobs' element={<Jobs/>}/>
           </Routes>
         </BrowserRouter>
       </Paper>

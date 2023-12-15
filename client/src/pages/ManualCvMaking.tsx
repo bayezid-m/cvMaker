@@ -70,8 +70,8 @@ const PrintComponent: React.FC<PrintComponentProps> = ({ content, email }) => {
         formData.append('file', dataURItoBlob(imageData), 'your_image.jpg');
         formData.append('upload_preset', 'ade40fld');
 
-
         const response = await axios.post("https://api.cloudinary.com/v1_1/dv4j8hjqf/image/upload", formData);
+
         setImageSender(response.data.public_id);
         if (response.data.public_id) {
           dispatch(addCV({ userData: { email: email, image: response.data.public_id } }))
@@ -203,13 +203,13 @@ const ManualCvMaking: React.FC = () => {
             <p>{userinfo.occupation}</p>
           </div>
           <div className="skill">
-            {userinfo.skills ? <h4>Skills</h4> : <div></div>}
+            {userinfo.skills.length>0 ?<h4>Skills</h4> : <div></div>}
             {userinfo.skills.map((skill) => (
               <div className='subskill'>{skill}</div>
             ))}
           </div>
           <div className="projects">
-            {userinfo.projects ? <div><h4>Projects</h4></div> : <div></div>}
+            {userinfo.projects.length>0 ? <div><h4>Projects</h4></div> : <div></div>}
             {userinfo.projects?.map((project) => (
               <ul>
                 <li>{project.name}</li>
@@ -218,7 +218,7 @@ const ManualCvMaking: React.FC = () => {
             ))}
           </div>
           <div className="experiences">
-            {userinfo.experiences ? <div><h4>Experience</h4></div> : <div></div>}
+            {userinfo.experiences.length>0 ? <div><h4>Experience</h4></div> : <div></div>}
             {userinfo.experiences?.map((exp) => (
               <ul>
                 <li>{exp.title}</li>
@@ -229,7 +229,7 @@ const ManualCvMaking: React.FC = () => {
             ))}
           </div>
           <div className="educations">
-            {userinfo.educations ? <div><h4>Education</h4></div> : <div></div>}
+            {userinfo.educations.length>0 ? <div><h4>Education</h4></div> : <div></div>}
             {userinfo.educations?.map((edu) => (
               <ul>
                 <li>{edu.institute}</li>
@@ -241,7 +241,6 @@ const ManualCvMaking: React.FC = () => {
           </div>
         </div>} />
     </div>
-
   )
 }
 

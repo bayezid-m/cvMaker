@@ -95,8 +95,8 @@ export default function NavBar({ check, change }: { check: any; change: any }) {
                          gap: "30px"
                          }}>
                         <Link to="/others">People</Link>
-                        <Link to="/others">People</Link>
-                        <Link to="/others">People</Link>
+                        <Link to="/events">Events</Link>
+                        <Link to="/jobs">Jobs</Link>
                     </div>
                     {token ?
                         <div style={{ display: 'flex', gap: 10 }}>

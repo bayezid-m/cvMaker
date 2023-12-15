@@ -179,13 +179,13 @@ const CvMaking: React.FC = () => {
             <p>{user.occupation}</p>
           </div>
           <div className="skill">
-            {user.skills ? <h4>Skills</h4> : <div></div>}
+            {user.skills.length>0 ? <h4>Skills</h4> : <div></div>}
             {user.skills.map((skill) => (
               <div className='subskill'>{skill}</div>
             ))}
           </div>
           <div className="projects">
-            {userProject ? <div><h4>Projects</h4></div> : <div></div>}
+            {userProject.length>0 ? <div><h4>Projects</h4></div> : <div></div>}
             {userProject.map((project) => (
               <ul>
                 <li>{project.name}</li>
@@ -194,7 +194,7 @@ const CvMaking: React.FC = () => {
             ))}
           </div>
           <div className="experiences">
-            {experiences ? <div><h4>Experience</h4></div> : <div></div>}
+            {experiences.length>0 ? <div><h4>Experience</h4></div> : <div></div>}
             {experiences?.map((exp) => (
               <ul>
                 <li>{exp.title}</li>
@@ -205,7 +205,7 @@ const CvMaking: React.FC = () => {
             ))}
           </div>
           <div className="educations">
-            {educations ? <div><h4>Education</h4></div> : <div></div>}
+            {educations.length>0 ? <div><h4>Education</h4></div> : <div></div>}
             {educations?.map((edu) => (
               <ul>
                 <li>{edu.institution}</li>
