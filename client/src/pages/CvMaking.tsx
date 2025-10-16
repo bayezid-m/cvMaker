@@ -135,7 +135,7 @@ const CvMaking: React.FC = () => {
       const formData = new FormData();
       formData.append('file', pdfBlob, 'my_cv.pdf');
 
-      fetch('https://receiver-oucl.onrender.com/upload', {
+      fetch('http://127.0.0.1:5000/upload', {
         method: 'POST',
         body: formData,
       })

@@ -111,6 +111,7 @@ const Profile = () => {
   const imageUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + user?.image + ".jpg"
 
   const CVUrl = "https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/" + userCV?.image + ".jpg"
+  ///https://res.cloudinary.com/dv4j8hjqf/image/upload/v1689848305/landingPage_t6e0sx.jpg
 
   return (
     <div className='profile'>
