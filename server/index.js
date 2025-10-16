@@ -25,6 +25,7 @@ app.use("/api/v1/project", projectRouter)
 //user CV router
 app.use("/api/v1/user/CV", cvRouter)
 
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
     connectDB();
